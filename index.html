@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunwar Manshahia | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#2a2a2a',
+                            light: '#eff8e2',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Inconsolata', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease;
+            overflow-x: hidden;
+        }
+        .header-border {
+            border-bottom: 2px solid currentColor;
+        }
+        .section-divider {
+            border-bottom: 2px solid currentColor;
+            opacity: 0.15;
+        }
+        .dark .section-divider {
+            opacity: 0.2;
+        }
+        .card-aspect {
+            aspect-ratio: 4 / 5;
+        }
+
+        @keyframes fall-down {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(var(--dx), 20px) rotate(var(--dr));
+            }
+            100% {
+                transform: translate(var(--dx-final), 120vh) rotate(var(--dr-final));
+                opacity: 0;
+            }
+        }
+
+        .letter-falling {
+            display: inline-block;
+            animation: fall-down var(--duration) forwards ease-in;
+            animation-delay: var(--delay);
+            pointer-events: none;
+        }
+
+        .letter-stay {
+            display: inline-block;
+            transition: color 1s ease;
+        }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        @keyframes spinOnce {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-once {
+            animation: spinOnce 0.5s ease-in-out 1;
+        }
+        /* Theme switch (Codepen sun/moon) – portfolio colours: #2a2a2a, #eff8e2 */
+        .theme-switch {
+            position: relative;
+            background: transparent;
+            border: 0;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .theme-switch .mode {
+            position: relative;
+            width: 19px;
+            height: 19px;
+            transition: transform 0.45s ease;
+            border-radius: 50%;
+            background: #2a2a2a;
+        }
+        .theme-switch .mode::before {
+            content: "";
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: box-shadow 0.4s 0s ease;
+        }
+        .theme-switch .mode::after {
+            content: "";
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            top: -20%;
+            left: 30%;
+            border-radius: 50%;
+            background: #eff8e2;
+            transition: transform 0.45s ease;
+        }
+        .theme-switch.dark .mode {
+            transform: scale(0.5);
+            background: #eff8e2;
+        }
+        .theme-switch.dark .mode::before {
+            opacity: 1;
+            box-shadow: 0 -20px 0 0 #eff8e2, 0 20px 0 0 #eff8e2, -20px 0 0 0 #eff8e2,
+                20px 0 0 0 #eff8e2, 15px 15px 0 0 #eff8e2, 15px -15px 0 0 #eff8e2,
+                -15px 15px 0 0 #eff8e2, -15px -15px 0 0 #eff8e2;
+        }
+        .theme-switch.dark .mode::after {
+            opacity: 0;
+            transition: background 0.45s ease;
+            transform: translateX(50%) translateY(-50%);
+        }
+        /* Custom cursor: hide system cursor everywhere */
+        html.custom-cursor,
+        html.custom-cursor * {
+            cursor: none !important;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom": "https://esm.sh/react-dom@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@^9.5.0",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@^10.7.7",
+    "three": "https://esm.sh/three@^0.182.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-brand-light text-brand-dark dark:bg-brand-dark dark:text-brand-light font-sans">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
