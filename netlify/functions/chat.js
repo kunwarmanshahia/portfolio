@@ -1,4 +1,5 @@
 import { chatWithGemini } from '../../lib/gemini.js';
+import { buildPortfolioContext } from '../../lib/portfolioContext.js';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -43,8 +44,15 @@ export async function handler(event) {
   }
 
   try {
-    // No portfolio context in Netlify to avoid fs/bundling issues; chat still works
-    const content = await chatWithGemini(messages, apiKey, '');
+    // best-effort: add page text context, but never fail the request if context fails
+    let portfolioContext = '';
+    try {
+      portfolioContext = await buildPortfolioContext(messages, process.cwd());
+    } catch (ctxErr) {
+      console.error('Portfolio context failed:', ctxErr);
+    }
+
+    const content = await chatWithGemini(messages, apiKey, portfolioContext);
     return {
       statusCode: 200,
       headers,

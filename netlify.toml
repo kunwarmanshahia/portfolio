@@ -4,6 +4,8 @@
 
 [functions]
   node_bundler = "esbuild"
+  # used by lib/portfolioContext.js at runtime
+  included_files = ["pages/**/*.tsx"]
 
 [[redirects]]
   from = "/api/chat"
