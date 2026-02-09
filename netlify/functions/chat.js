@@ -56,8 +56,14 @@ export async function handler(event, context) {
   }
 
   try {
-    const basePath = getBasePath();
-    const portfolioContext = await buildPortfolioContext(messages, basePath);
+    // Netlify/Lambda: use process.cwd() so included_files (pages/*.tsx) are found
+    const basePath = process.env.NETLIFY ? process.cwd() : getBasePath();
+    let portfolioContext = '';
+    try {
+      portfolioContext = await buildPortfolioContext(messages, basePath);
+    } catch (ctxErr) {
+      console.error('Portfolio context failed:', ctxErr);
+    }
     const content = await chatWithGemini(messages, apiKey, portfolioContext);
     return {
       statusCode: 200,
