@@ -3,8 +3,7 @@
   command = "npm run build"
 
 [functions]
-  # zisi = default bundler; esbuild can cause 502 in some Lambda envs
-  node_bundler = "zisi"
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/api/chat"
