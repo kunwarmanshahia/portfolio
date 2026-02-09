@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import ProjectsPage from './pages/ProjectsPage';
 import About from './pages/About';
 import ForgeCaseStudy from './pages/ForgeCaseStudy';
+import MosaicCaseStudy from './pages/MosaicCaseStudy';
 import { Theme } from './types';
 
 const App: React.FC = () => {
@@ -57,6 +58,7 @@ const App: React.FC = () => {
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/case-study/forge" element={<ForgeCaseStudy />} />
+              <Route path="/case-study/mosaic" element={<MosaicCaseStudy />} />
             </Routes>
           </main>
           <footer className="p-8 md:p-12 text-xs font-mono opacity-50 text-center uppercase tracking-widest border-t border-brand-dark/10 dark:border-brand-light/10 mt-20">

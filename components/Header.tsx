@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Theme } from '../types';
@@ -15,8 +14,8 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
 
   const navLinks = [
     { name: 'Projects', path: '/projects' },
-    { name: 'About', path: '/about' },
     { name: 'Resume', path: 'https://example.com/resume.pdf', external: true },
+    { name: 'About', path: '/about' },
   ];
 
   const isDark = theme === 'dark';
@@ -24,8 +23,12 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-brand-light/70 dark:bg-brand-dark/70 header-border px-4 py-4 md:px-8 lg:px-12 backdrop-blur-md transition-colors duration-300">
       <div className="max-w-[1920px] mx-auto flex justify-between items-center w-full">
-        {/* Name: Inter */}
-        <Link to="/" className="font-sans font-normal text-2xl md:text-3xl tracking-tight hover:opacity-70 transition-opacity text-brand-dark dark:text-brand-light">
+        {/* Name / Home */}
+        <Link
+          to="/"
+          className="flex items-center hover:opacity-70 transition-opacity text-brand-dark dark:text-brand-light font-sans font-normal text-xl md:text-2xl tracking-tight"
+          aria-label="Kunwar Manshahia – Home"
+        >
           Kunwar Manshahia
         </Link>
 
@@ -59,28 +62,40 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             aria-label={chatOpen ? 'Close KAI chat' : 'Open KAI chat'}
             className="group/kai flex items-center gap-2 font-sans text-sm md:text-base font-medium text-brand-dark dark:text-brand-light hover:opacity-70 transition-opacity focus:outline-none"
           >
-            {/* Diamond: spins once and lights up on hover; lit when chat open */}
+            {/* AI symbol (crosshair): theme colour; cursor orange on hover and when chat open */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              className={`transition-colors duration-300 group-hover/kai:fill-orange-500 group-hover/kai:animate-spin-once ${chatOpen ? 'fill-orange-500' : 'fill-brand-dark dark:fill-brand-light opacity-50'}`}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`transition-colors duration-300 group-hover/kai:stroke-orange-500 ${chatOpen ? 'stroke-orange-500' : 'stroke-brand-dark dark:stroke-brand-light opacity-50'}`}
             >
-              <path d="M6 0L12 6L6 12L0 6L6 0Z" />
+              <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
             </svg>
             <span>KAI</span>
           </button>
 
-          {/* Theme switch (sun / moon from Codepen) */}
-          <button
-            type="button"
-            onClick={onToggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className={`theme-switch ml-4 focus:outline-none ${isDark ? 'dark' : ''}`}
-          >
-            <div className="mode" aria-hidden />
-          </button>
+          {/* Dark mode toggle – pill + knob, portfolio colours */}
+          <label htmlFor="dark-mode" className="relative inline-flex items-center cursor-pointer">
+            <input
+              id="dark-mode"
+              type="checkbox"
+              className="sr-only peer"
+              role="switch"
+              aria-label="Dark mode"
+              checked={isDark}
+              onChange={onToggleTheme}
+            />
+            <div
+              className="relative group peer bg-brand-light rounded-full duration-300 w-[41px] h-5 ring-2 ring-brand-dark after:content-[''] after:duration-300 after:bg-brand-dark after:rounded-full after:absolute after:h-3.5 after:w-3.5 after:top-[3px] after:left-[3px] peer-checked:after:translate-x-[21px] peer-checked:after:bg-brand-light peer-checked:ring-brand-light peer-checked:bg-brand-dark peer-hover:after:scale-95"
+              aria-hidden
+            />
+          </label>
         </nav>
       </div>
     </header>

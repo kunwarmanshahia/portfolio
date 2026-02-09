@@ -42,30 +42,30 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
   }, [open]);
 
   const suggestedQuestions = [
-    'Tell me about your design process',
-    'What projects have you worked on?',
-    'How do you approach problem-solving?',
+    'tell me about your design process',
+    'what projects have you worked on?',
+    'how do you approach problem-solving?',
   ];
 
   const followUpPool = [
-    'What was the most challenging part?',
-    "What's next?",
-    'What inspired that?',
-    'How did you get started with that?',
-    'What would you do differently?',
-    'What tools do you use?',
-    'How do you balance aesthetics and function?',
-    'Any advice for someone starting out?',
-    'What are you working on now?',
-    'How do you approach feedback?',
-    'What’s a project you’re proud of?',
-    'How do you stay inspired?',
-    'What does your typical process look like?',
-    'How do you decide when something is done?',
-    'What’s the story behind that?',
-    'What’s one thing you’d tell your past self?',
-    'How do you collaborate with others?',
-    'What’s the most underrated part of design?',
+    'what was the most challenging part?',
+    "what's next?",
+    'what inspired that?',
+    'how did you get started with that?',
+    'what would you do differently?',
+    'what tools do you use?',
+    'how do you balance aesthetics and function?',
+    'any advice for someone starting out?',
+    'what are you working on now?',
+    'how do you approach feedback?',
+    'what’s a project you’re proud of?',
+    'how do you stay inspired?',
+    'what does your typical process look like?',
+    'how do you decide when something is done?',
+    'what’s the story behind that?',
+    'what’s one thing you’d tell your past self?',
+    'how do you collaborate with others?',
+    'what’s the most underrated part of design?',
   ];
 
   const followUpSuggestions = React.useMemo(() => {
@@ -254,8 +254,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
         <div className="flex-1 overflow-y-auto px-6 pt-16 pb-6 min-h-0">
             {messages.length === 0 ? (
               <div className="space-y-5 pt-6">
-                {/* Greeting like "Hey, ask away." */}
-                <p className={`text-lg font-medium ${textClass}`}>Hey, ask away.</p>
+                {/* Greeting */}
+                <p className={`text-lg font-medium ${textClass}`}>hey! what’s up?</p>
                 {/* Suggestions with ↳ arrow, lighter grey text */}
                 <div className="space-y-2">
                   {suggestedQuestions.map((question, idx) => (

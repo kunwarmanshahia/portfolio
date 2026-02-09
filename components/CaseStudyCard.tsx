@@ -8,7 +8,9 @@ interface CaseStudyCardProps {
 }
 
 const slugFromStudy = (study: CaseStudy): string | null => {
-  if (study.id === '1' || study.title.toLowerCase() === 'forge') return '/case-study/forge';
+  const app = study.appName?.toLowerCase?.() ?? '';
+  if (study.id === '1' || app === 'forge') return '/case-study/forge';
+  if (study.id === '2' || app === 'mosaic') return '/case-study/mosaic';
   return null;
 };
 
@@ -23,12 +25,12 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="flex justify-between items-baseline tracking-tight">
-        <span className="font-sans font-normal text-sm md:text-base text-brand-dark dark:text-brand-light group-hover:opacity-70 transition-opacity">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 items-start tracking-tight">
+        <span className="font-sans font-normal text-sm md:text-base text-brand-dark dark:text-brand-light group-hover:opacity-70 transition-opacity min-w-0 break-words leading-snug">
           {study.title}
         </span>
-        <span className="font-mono font-normal text-xs md:text-sm text-brand-dark/50 dark:text-brand-light/50 uppercase">
-          {study.category}
+        <span className="font-mono font-normal text-xs md:text-sm text-brand-dark/50 dark:text-brand-light/50 uppercase whitespace-nowrap">
+          {study.appName} • {study.category}
         </span>
       </div>
     </>
