@@ -85,7 +85,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
 
   const sendMessage = async (text?: string) => {
     const messageText = text || input.trim();
-    console.log('[K_AI] sendMessage called', { messageText: messageText?.slice(0, 20), loading });
+    console.log('[kai] sendMessage called', { messageText: messageText?.slice(0, 20), loading });
     if (!messageText || loading) return;
 
     setInput('');
@@ -97,7 +97,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
     const history = [...messages, userMsg].map((m) => ({ role: m.role, content: m.content }));
 
     const apiUrl = import.meta.env.DEV ? 'http://localhost:3001/api/chat' : '/api/chat';
-    console.log('[K_AI] Sending to', apiUrl, 'messages:', history.length);
+    console.log('[kai] Sending to', apiUrl, 'messages:', history.length);
 
     try {
       const res = await fetch(apiUrl, {
@@ -105,7 +105,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: history }),
       });
-      console.log('[K_AI] Response', res.status, res.statusText);
+      console.log('[kai] Response', res.status, res.statusText);
 
       const contentType = res.headers.get('content-type');
       const isJson = contentType?.includes('application/json');
@@ -129,7 +129,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
         setError('No response from server.');
       }
     } catch (err) {
-      console.error('[K_AI] Fetch error', err);
+      console.error('[kai] Fetch error', err);
       const message = err instanceof Error ? err.message : 'Something went wrong';
       if (message.includes('Failed to fetch') || message.includes('NetworkError') || message.includes('Load failed')) {
         setError('Chat server isn’t running. Run: npm run server (or npm run dev:all) in the project root.');
@@ -190,7 +190,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
               <path d="M6 0L12 6L6 12L0 6L6 0Z" />
             </svg>
             
-            <span className="font-mono font-medium">K_AI</span>
+            <span className="font-mono font-medium">kai</span>
             
             {/* Info icon with hover tooltip */}
             <div className="relative">
@@ -199,7 +199,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
                 className="flex items-center justify-center w-5 h-5 rounded-full border border-current opacity-60 hover:opacity-100 transition-opacity"
-                aria-label="About K_AI"
+                aria-label="About kai"
               >
                 <span className="text-xs">i</span>
               </button>
