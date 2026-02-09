@@ -1,0 +1,13 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["pages/**/*.tsx", "lib/**/*.js"]
+
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
+  force = true
