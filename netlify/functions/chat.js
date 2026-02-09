@@ -1,17 +1,4 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { chatWithGemini } from '../../lib/gemini.js';
-import { buildPortfolioContext } from '../../lib/portfolioContext.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// In Netlify Functions, files are bundled; resolve relative to function location
-// Try multiple possible base paths
-const getBasePath = () => {
-  // Try relative to function location (for bundled functions)
-  const funcBase = path.resolve(__dirname, '../..');
-  // Fallback to process.cwd() (might be /var/task in Lambda)
-  return funcBase;
-};
 
 const headers = {
   'Content-Type': 'application/json',
@@ -19,7 +6,7 @@ const headers = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-export async function handler(event, context) {
+export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers, body: '' };
   }
@@ -56,15 +43,8 @@ export async function handler(event, context) {
   }
 
   try {
-    // Netlify/Lambda: use process.cwd() so included_files (pages/*.tsx) are found
-    const basePath = process.env.NETLIFY ? process.cwd() : getBasePath();
-    let portfolioContext = '';
-    try {
-      portfolioContext = await buildPortfolioContext(messages, basePath);
-    } catch (ctxErr) {
-      console.error('Portfolio context failed:', ctxErr);
-    }
-    const content = await chatWithGemini(messages, apiKey, portfolioContext);
+    // No portfolio context in Netlify to avoid fs/bundling issues; chat still works
+    const content = await chatWithGemini(messages, apiKey, '');
     return {
       statusCode: 200,
       headers,
