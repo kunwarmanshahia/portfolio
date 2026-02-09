@@ -56,10 +56,10 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             )
           ))}
           
-          {/* KAI Button */}
+          {/* K_AI Button */}
           <button
             onClick={onToggleChat}
-            aria-label={chatOpen ? 'Close KAI chat' : 'Open KAI chat'}
+            aria-label={chatOpen ? 'Close K_AI chat' : 'Open K_AI chat'}
             className="group/kai flex items-center gap-2 font-sans text-sm md:text-base font-medium text-brand-dark dark:text-brand-light hover:opacity-70 transition-opacity focus:outline-none"
           >
             {/* AI symbol (crosshair): theme colour; cursor orange on hover and when chat open */}
@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             >
               <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
             </svg>
-            <span>KAI</span>
+            <span>K_AI</span>
           </button>
 
           {/* Dark mode toggle – pill + knob, portfolio colours */}

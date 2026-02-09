@@ -1,9 +1,9 @@
 import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fs from 'fs/promises';
 import dotenv from 'dotenv';
 import { chatWithGemini } from './lib/gemini.js';
+import { buildPortfolioContext } from './lib/portfolioContext.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.resolve(__dirname, '.env');
@@ -11,65 +11,6 @@ dotenv.config({ path: envPath });
 
 const PORT = 3001;
 const apiKey = process.env.GEMINI_API_KEY;
-
-function extractVisibleTextFromTsx(source) {
-  // grab text nodes between tags: >text<
-  const matches = source.matchAll(/>([^<>]+)</g);
-  const lines = [];
-  for (const m of matches) {
-    const raw = (m[1] ?? '').replace(/\s+/g, ' ').trim();
-    if (!raw) continue;
-    // ignore obvious jsx leftovers
-    if (raw === '{label}' || raw === '{question}' || raw === '{s}') continue;
-    lines.push(raw);
-  }
-
-  // de-dupe while keeping order
-  const seen = new Set();
-  const unique = [];
-  for (const l of lines) {
-    const key = l.toLowerCase();
-    if (seen.has(key)) continue;
-    seen.add(key);
-    unique.push(l);
-  }
-
-  return unique.join('\n');
-}
-
-async function buildPortfolioContext(messages) {
-  const joined = (messages || []).map((m) => String(m?.content ?? '')).join(' ').toLowerCase();
-  const chunks = [];
-
-  // forge context: pull from the actual case study page
-  if (joined.includes('forge')) {
-    try {
-      const forgePath = path.resolve(__dirname, 'pages', 'ForgeCaseStudy.tsx');
-      const src = await fs.readFile(forgePath, 'utf8');
-      const text = extractVisibleTextFromTsx(src);
-      // keep context reasonably sized
-      const clipped = text.length > 6000 ? `${text.slice(0, 6000)}\n…` : text;
-      chunks.push(`forge page text (from pages/ForgeCaseStudy.tsx):\n${clipped}`);
-    } catch (e) {
-      console.error('failed to load forge context:', e);
-    }
-  }
-
-  // mosaic context: pull from the actual case study page
-  if (joined.includes('mosaic')) {
-    try {
-      const mosaicPath = path.resolve(__dirname, 'pages', 'MosaicCaseStudy.tsx');
-      const src = await fs.readFile(mosaicPath, 'utf8');
-      const text = extractVisibleTextFromTsx(src);
-      const clipped = text.length > 6000 ? `${text.slice(0, 6000)}\n…` : text;
-      chunks.push(`mosaic page text (from pages/MosaicCaseStudy.tsx):\n${clipped}`);
-    } catch (e) {
-      console.error('failed to load mosaic context:', e);
-    }
-  }
-
-  return chunks.join('\n\n');
-}
 
 console.log('Loading .env from:', envPath);
 if (apiKey) {
@@ -134,7 +75,7 @@ const server = http.createServer(async (req, res) => {
 
     try {
       console.log('Calling Gemini API...');
-      const portfolioContext = await buildPortfolioContext(messages);
+      const portfolioContext = await buildPortfolioContext(messages, __dirname);
       const content = await chatWithGemini(messages, apiKey, portfolioContext);
       console.log('Got response, length:', content?.length || 0);
       res.writeHead(200, { 'Content-Type': 'application/json' });
