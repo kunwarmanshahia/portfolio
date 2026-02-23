@@ -13,9 +13,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Projects', path: '/projects' },
     { name: 'Resume', path: 'https://example.com/resume.pdf', external: true },
-    { name: 'About', path: '/about' },
   ];
 
   const isDark = theme === 'dark';
@@ -32,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
           Kunwar Manshahia
         </Link>
 
-        {/* Nav: Proper capitalization */}
+        {/* Nav: Resume, About, Ask My AI */}
         <nav className="flex items-center space-x-6 md:space-x-12 font-sans text-sm md:text-base font-medium">
           {navLinks.map((link) => (
             link.external ? (
@@ -55,14 +53,13 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
               </Link>
             )
           ))}
-          
+
           {/* Ask My AI Button */}
           <button
             onClick={onToggleChat}
-            aria-label={chatOpen ? 'Close Kunwar AI chat' : 'Open Kunwar AI chat'}
+            aria-label={chatOpen ? 'Close Ask My AI chat' : 'Open Ask My AI chat'}
             className="group/kai flex items-center gap-1.5 font-mono font-bold text-base md:text-lg text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none"
           >
-            {/* AI symbol (crosshair): theme colour; cursor orange on hover and when chat open */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -77,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             >
               <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
             </svg>
-            <span>Kunwar // AI</span>
+            <span>Ask My AI</span>
           </button>
 
           {/* Dark mode toggle – pill + knob, portfolio colours */}

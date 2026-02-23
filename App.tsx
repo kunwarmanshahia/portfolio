@@ -5,8 +5,6 @@ import Header from './components/Header';
 import Cursor from './components/Cursor';
 import ChatWidget from './components/ChatWidget';
 import Home from './pages/Home';
-import ProjectsPage from './pages/ProjectsPage';
-import About from './pages/About';
 import ForgeCaseStudy from './pages/ForgeCaseStudy';
 import MosaicCaseStudy from './pages/MosaicCaseStudy';
 import { Theme } from './types';
@@ -55,8 +53,6 @@ const App: React.FC = () => {
           <main className="pt-16 md:pt-20 min-w-0">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/about" element={<About />} />
               <Route path="/case-study/forge" element={<ForgeCaseStudy />} />
               <Route path="/case-study/mosaic" element={<MosaicCaseStudy />} />
             </Routes>
