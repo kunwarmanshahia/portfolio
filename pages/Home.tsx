@@ -55,7 +55,7 @@ const Home: React.FC = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-          {summaryProjects.slice(0, 4).map((project) => (
+          {summaryProjects.slice(0, 2).map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
@@ -66,7 +66,7 @@ const Home: React.FC = () => {
         >
           <div className="min-h-0 overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-              {summaryProjects.slice(4).map((project) => (
+              {summaryProjects.slice(2).map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
@@ -75,23 +75,25 @@ const Home: React.FC = () => {
         <button
           type="button"
           onClick={() => setProjectsExpanded((v) => !v)}
-          className="flex items-center justify-center w-full py-4 text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark dark:focus-visible:ring-brand-light rounded"
+          className="group flex items-center justify-center w-full py-4 text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark dark:focus-visible:ring-brand-light rounded-full"
           aria-expanded={projectsExpanded}
         >
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`transition-transform duration-300 ease-in-out ${projectsExpanded ? 'rotate-180' : ''}`}
-          >
-            <path d="M12 6V18M12 18L7 13M12 18L17 13" />
-          </svg>
+          <span className="flex items-center justify-center w-14 h-14 rounded-full border-2 border-current transition-colors group-hover:border-orange-500 dark:group-hover:border-orange-400">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`transition-transform duration-300 ease-in-out ${projectsExpanded ? 'rotate-180' : ''}`}
+            >
+              <path d="M12 6V18M12 18L7 13M12 18L17 13" />
+            </svg>
+          </span>
         </button>
       </section>
 
