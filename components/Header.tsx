@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
         {/* Name / Home */}
         <Link
           to="/"
-          className="flex items-center hover:opacity-70 transition-opacity text-brand-dark dark:text-brand-light font-sans font-normal text-xl md:text-2xl tracking-tight"
+          className="flex items-center transition-colors text-brand-dark dark:text-brand-light font-sans font-normal text-xl md:text-2xl tracking-tight hover:text-orange-500 dark:hover:text-orange-400"
           aria-label="Kunwar Manshahia – Home"
         >
           Kunwar Manshahia
@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
                 href={link.path}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-50 transition-all text-brand-dark dark:text-brand-light"
+                className="transition-colors text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400"
               >
                 {link.name}
               </a>
@@ -49,18 +49,18 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
               <Link
                 key={link.name}
                 to={link.path}
-                className={`${location.pathname === link.path ? 'underline underline-offset-4' : 'hover:opacity-50'} transition-all text-brand-dark dark:text-brand-light`}
+                className={`${location.pathname === link.path ? 'underline underline-offset-4' : ''} transition-colors text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400`}
               >
                 {link.name}
               </Link>
             )
           ))}
           
-          {/* kai Button */}
+          {/* Ask My AI Button */}
           <button
             onClick={onToggleChat}
-            aria-label={chatOpen ? 'Close kai chat' : 'Open kai chat'}
-            className="group/kai flex items-center gap-2 font-sans text-sm md:text-base font-medium text-brand-dark dark:text-brand-light hover:opacity-70 transition-opacity focus:outline-none"
+            aria-label={chatOpen ? 'Close Kunwar AI chat' : 'Open Kunwar AI chat'}
+            className="group/kai flex items-center gap-1.5 font-mono font-bold text-base md:text-lg text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none"
           >
             {/* AI symbol (crosshair): theme colour; cursor orange on hover and when chat open */}
             <svg
@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             >
               <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
             </svg>
-            <span>kai</span>
+            <span>Kunwar // AI</span>
           </button>
 
           {/* Dark mode toggle – pill + knob, portfolio colours */}

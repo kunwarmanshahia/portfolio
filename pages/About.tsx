@@ -36,10 +36,10 @@ const About: React.FC = () => {
           <div className="space-y-2">
             <h2 className="uppercase text-[10px] md:text-xs font-bold opacity-40 tracking-[0.2em]">Connect</h2>
             <ul className="text-lg space-y-1 underline underline-offset-4 font-medium">
-              <li><a href="mailto:hello@kunwar.com" className="hover:opacity-60 transition-opacity">Email</a></li>
-              <li><a href="https://linkedin.com" className="hover:opacity-60 transition-opacity">LinkedIn</a></li>
-              <li><a href="https://twitter.com" className="hover:opacity-60 transition-opacity">Twitter/X</a></li>
-              <li><a href="https://instagram.com" className="hover:opacity-60 transition-opacity">Instagram</a></li>
+              <li><a href="mailto:hello@kunwar.com" className="transition-colors hover:text-orange-500 dark:hover:text-orange-400">Email</a></li>
+              <li><a href="https://linkedin.com" className="transition-colors hover:text-orange-500 dark:hover:text-orange-400">LinkedIn</a></li>
+              <li><a href="https://twitter.com" className="transition-colors hover:text-orange-500 dark:hover:text-orange-400">Twitter/X</a></li>
+              <li><a href="https://instagram.com" className="transition-colors hover:text-orange-500 dark:hover:text-orange-400">Instagram</a></li>
             </ul>
           </div>
 

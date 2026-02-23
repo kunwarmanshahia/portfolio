@@ -19,7 +19,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isLarge }) => {
       </div>
       
       <div className="flex justify-between items-baseline tracking-tight">
-        <h3 className="font-sans font-normal text-sm md:text-base text-brand-dark dark:text-brand-light group-hover:opacity-70 transition-opacity">
+        <h3 className="font-sans font-normal text-sm md:text-base text-brand-dark dark:text-brand-light group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
           {project.title}
         </h3>
         <span className="font-mono font-normal text-xs md:text-sm text-brand-dark/50 dark:text-brand-light/50 uppercase">

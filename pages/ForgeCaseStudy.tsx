@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Lottie from 'lottie-react';
 
-/* Sidebar only: Overview, Solution, Core Flows, Research, Design Decisions, Final Design, Reflection (Problem & Opportunity not in sidebar) */
+const MOTION_ANIMATIONS: { src: string; scale: number }[] = [
+  { src: '/animations/paintingrolleranimation.json', scale: 1.21 },
+  { src: '/animations/ElectricianBoltCutters.json', scale: 1.1025 },
+  { src: '/animations/plumbingtool.json', scale: 1.15 },
+];
+
+const LottieFromUrl: React.FC<{ src: string; className?: string }> = ({ src, className }) => {
+  const [data, setData] = useState<object | null>(null);
+  useEffect(() => {
+    fetch(src)
+      .then((res) => res.json())
+      .then(setData)
+      .catch(() => setData(null));
+  }, [src]);
+  if (!data) return null;
+  return <Lottie animationData={data} loop className={className} rendererSettings={{ preserveAspectRatio: 'xMidYMid meet' }} />;
+};
+
+/* Sidebar: Overview/Problem, Solution, Core Flows, Research, Motion Design, Final Design, Reflection */
 const SECTIONS = [
-  { id: 'overview', label: 'Overview' },
+  { id: 'overview', label: 'Overview/Problem' },
   { id: 'solution', label: 'Solution' },
   { id: 'research', label: 'Research' },
   { id: 'core-flows', label: 'Core Flows' },
-  { id: 'design-decisions', label: 'Design Decisions' },
+  { id: 'motion-graphics', label: 'Motion Design' },
   { id: 'final-design', label: 'Final Design' },
   { id: 'reflection', label: 'Reflection' },
 ];
@@ -15,6 +34,65 @@ const SECTIONS = [
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
   el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+/* Final Design carousel: row1 = 6,8,7; row2 = 5,4,3; row3 = unnumbered, 1, 2 */
+const FINAL_DESIGN_SLIDES = [
+  '/images/forge-iphone-6.png',
+  '/images/forge-iphone-8.png',
+  '/images/forge-iphone-7.png',
+  '/images/forge-iphone-5.png',
+  '/images/forge-iphone-4.png',
+  '/images/forge-iphone-3.png',
+  '/images/forge-iphone.png',
+  '/images/forge-iphone-1.png',
+  '/images/forge-iphone-2.png',
+];
+
+const SLIDES_PER_PAGE = 3;
+const FinalDesignCarousel: React.FC = () => {
+  const [page, setPage] = useState(0);
+  const totalPages = Math.ceil(FINAL_DESIGN_SLIDES.length / SLIDES_PER_PAGE);
+  const prev = () => setPage((p) => (p === 0 ? totalPages - 1 : p - 1));
+  const next = () => setPage((p) => (p === totalPages - 1 ? 0 : p + 1));
+  const start = page * SLIDES_PER_PAGE;
+  const visible = FINAL_DESIGN_SLIDES.slice(start, start + SLIDES_PER_PAGE);
+  return (
+    <div className="w-full">
+      <div className="grid grid-cols-3 gap-4 md:gap-6 w-full">
+        {visible.map((src, i) => (
+          <div key={src} className="rounded overflow-hidden flex justify-center">
+            <img
+              src={src}
+              alt={`Forge final design — screen ${start + i + 1}`}
+              className="w-full h-auto block max-w-full"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-6 mt-10 md:mt-12">
+        <button
+          type="button"
+          onClick={prev}
+          className="font-sans text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2 rounded border border-brand-dark/20 dark:border-brand-light/20 text-lg"
+          aria-label="Previous"
+        >
+          <span aria-hidden>←</span>
+        </button>
+        <span className="font-mono text-sm md:text-base text-brand-dark/70 dark:text-brand-light/70 tabular-nums">
+          {page + 1} / {totalPages}
+        </span>
+        <button
+          type="button"
+          onClick={next}
+          className="font-sans text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2 rounded border border-brand-dark/20 dark:border-brand-light/20 text-lg"
+          aria-label="Next"
+        >
+          <span aria-hidden>→</span>
+        </button>
+      </div>
+    </div>
+  );
 };
 
 const ForgeCaseStudy: React.FC = () => {
@@ -26,7 +104,7 @@ const ForgeCaseStudy: React.FC = () => {
           <nav className="lg:sticky lg:top-24 space-y-1">
             <Link
               to="/#case-studies"
-              className="flex items-center gap-2 font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 hover:text-brand-dark dark:hover:text-brand-light transition-colors mb-6"
+              className="flex items-center gap-2 font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-6"
             >
               <span aria-hidden>←</span>
               <span>BACK</span>
@@ -36,7 +114,7 @@ const ForgeCaseStudy: React.FC = () => {
                 key={id}
                 type="button"
                 onClick={() => scrollTo(id)}
-                className="block w-full text-left font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 hover:text-brand-dark dark:hover:text-brand-light transition-colors py-1"
+                className="block w-full text-left font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-1"
               >
                 {label}
               </button>
@@ -46,7 +124,7 @@ const ForgeCaseStudy: React.FC = () => {
 
         {/* Main content */}
         <article className="w-full max-w-3xl flex-1 order-1 lg:order-2 min-w-0">
-          {/* Hero — left-aligned label, title, hero image, project details */}
+          {/* Hero — label, title, read time, hero image, project details */}
           <header className="text-left mb-12 md:mb-20 w-full max-w-full">
             <div className="font-mono text-sm md:text-base uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-3 w-full">
               FORGE • UX/UI + MOTION DESIGN • 2025
@@ -54,10 +132,13 @@ const ForgeCaseStudy: React.FC = () => {
             <h1 className="font-sans font-normal text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight text-brand-dark dark:text-brand-light w-full max-w-full break-words">
               Our response to BC's 60,000 skilled tradesperson gap.
             </h1>
-            {/* Hero image placeholder */}
-            <div className="mt-8 md:mt-10 aspect-[16/10] bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center relative">
-              <span className="w-3 h-3 rounded-full bg-brand-dark/30 dark:bg-brand-light/30" aria-hidden />
-              <span className="sr-only">Hero image placeholder — add Forge hero or key visual</span>
+            {/* Hero / cover image */}
+            <div className="mt-8 md:mt-10 rounded overflow-hidden relative w-full">
+              <img
+                src="/images/covers/forge-cover.png"
+                alt="Forge — Build your future, today. App screens showing career guide and pathways."
+                className="w-full h-auto object-contain block"
+              />
             </div>
             {/* Project details: Role, Timeline, Team, Skills */}
             <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -108,32 +189,27 @@ const ForgeCaseStudy: React.FC = () => {
             </div>
           </header>
 
-          {/* Overview, Problem, Opportunity under one border */}
+          {/* Overview/Problem, Opportunity under one border */}
           <section id="overview" className="mb-12 md:mb-16 scroll-mt-24">
             <div className="pt-4 border-t-2 border-brand-dark dark:border-brand-light">
               <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2">
-                Overview
+                Overview/Problem
               </div>
-              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
                 A career pathway app that makes trades careers easier to understand.
               </h2>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
                 Forge is built for high school students from financially struggling households who need a clear view of what they’re choosing.
               </p>
-              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-6">
-                It breaks down in-demand trades into simple, structured pages: what the work looks like, what skills you need, what training costs, and how income grows over time.
-              </p>
-              <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                What Forge is trying to do
-              </h3>
-              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-10">
-                Help students make a decision with less guessing. Not by “motivating” them into trades — but by showing the full picture in plain language.
-              </p>
-
-              <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2">
-                Problem
+              <div className="rounded overflow-hidden mb-6 w-full">
+                <img
+                  src="/images/ForgeOverviewPic1.png"
+                  alt="Forge app overview — career pathway and trades discovery"
+                  className="w-full h-auto block"
+                />
               </div>
-              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+
+              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
                 Trades careers are real options, but the path isn’t clear to students.
               </h2>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
@@ -147,73 +223,63 @@ const ForgeCaseStudy: React.FC = () => {
                 <li>The wording is confusing or too broad.</li>
                 <li>Important details are missing (cost, time, steps, long-term income).</li>
               </ul>
-              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-10">
+              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-0">
                 So students either delay the decision, pick randomly, or default to what feels “safe.”
               </p>
 
-              <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2">
-                Opportunity
-              </div>
-              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
-                Make the future visible early.
-              </h2>
-              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
-                For the students Forge is designed for, money and stability aren’t “nice to know.” They’re the decision.
-              </p>
-              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-2">
-                If Forge can show:
-              </p>
-              <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-4">
-                <li>Cost to start</li>
-                <li>Time to qualify</li>
-                <li>Income ranges now vs later</li>
-              </ul>
-              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                Then trades stop feeling like a gamble and start feeling like an option you can actually plan around.
-              </p>
             </div>
           </section>
 
           <section id="solution" className="mb-12 md:mb-16 scroll-mt-24">
-            <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
-              Solution
+            <div className="pt-4 border-t-2 border-brand-dark dark:border-brand-light">
+              <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2">
+                Solution
+              </div>
+              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+                A decision-support product for trades careers.
+              </h2>
+              <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
+                Forge doesn't try to "sell" you a trade. It gives you a structured breakdown so you can decide.
+              </p>
+              <div className="rounded overflow-hidden mb-6 w-full bg-brand-dark/5 dark:bg-brand-light/5 min-h-[200px]">
+                <img
+                  src="/images/forge-solution.png"
+                  alt="Forge solution — career pathway and trades discovery"
+                  className="w-full h-auto block object-contain"
+                />
+              </div>
+              <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
+                What Forge includes
+              </h3>
+              <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-6">
+                <li>AI career advisor (allows you to experience a trade)</li>
+                <li>Clear career overviews (what the job is, what you do daily)</li>
+                <li>Training pathway (steps, timelines, how to start)</li>
+              </ul>
             </div>
-            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
-              A decision-support product for trades careers.
-            </h2>
-            <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
-              Forge doesn’t try to “sell” you a trade. It gives you a structured breakdown so you can decide.
-            </p>
-            <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-              What Forge includes
-            </h3>
-            <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1">
-              <li>Clear career overviews (what the job is, what you do daily)</li>
-              <li>Required skills + what you need to be good at</li>
-              <li>Training pathway (steps, timelines, how to start)</li>
-              <li>Costs + realistic salary ranges</li>
-              <li>Income growth over time (short-term vs long-term)</li>
-            </ul>
           </section>
 
           <section id="research" className="mb-12 md:mb-16 scroll-mt-24">
             <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
               Research
             </div>
-            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
               Students don’t just need more information — they need clearer information.
             </h2>
-            <div className="grid grid-cols-2 gap-6 mb-6">
-              <div className="aspect-[3/2] min-h-[200px] bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Research image 1</span>
-              </div>
-              <div className="aspect-[3/2] min-h-[200px] bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Research image 2</span>
-              </div>
+            <div className="rounded overflow-hidden mb-6 w-full bg-brand-dark/5 dark:bg-brand-light/5 min-h-[200px]">
+              <img
+                src="/images/ForgeSurvey1.png"
+                alt="Forge survey insights — chart and key findings"
+                className="w-full h-auto block object-contain"
+              />
             </div>
-            <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
-              From our research, the pattern was consistent:
-            </p>
+            <div className="rounded overflow-hidden mb-6 w-full bg-brand-dark/5 dark:bg-brand-light/5 min-h-[200px]">
+              <img
+                src="/images/ForgeSurvey2.png"
+                alt="Forge survey insights — additional responses and themes"
+                className="w-full h-auto block object-contain"
+              />
+            </div>
             <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-4">
               <li>Students discover trades too late.</li>
               <li>Online info is hard to find or understand.</li>
@@ -228,111 +294,51 @@ const ForgeCaseStudy: React.FC = () => {
             <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
               Core Flows
             </div>
-            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
               Explore careers → Understand the path → Compare outcomes.
             </h2>
-            <div className="space-y-8">
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                <div className="w-full md:w-1/2 flex-shrink-0 aspect-[3/2] md:aspect-[4/3] min-h-[240px] md:min-h-0 bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Explore In-Demand</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                    Explore In-Demand Trades
-                  </h3>
-                  <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                    Users browse trades that are actually needed (not just random career lists).
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                <div className="w-full md:w-1/2 flex-shrink-0 aspect-[3/2] md:aspect-[4/3] min-h-[240px] md:min-h-0 bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Career Breakdown</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                    Career Breakdown Page
-                  </h3>
-                  <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                    Users see the job in plain language: daily work, skills, requirements.
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                <div className="w-full md:w-1/2 flex-shrink-0 aspect-[3/2] md:aspect-[4/3] min-h-[240px] md:min-h-0 bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Pathway + Financial</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                    Pathway + Financial View
-                  </h3>
-                  <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                    Users see the steps to get started and what the money looks like over time.
-                  </p>
-                </div>
-              </div>
+            <div className="rounded overflow-hidden mb-6 w-full">
+              <img
+                src="/images/CoreFlows.png"
+                alt="Forge core flows — Interactive Simulation, Explore In-Demand Trades, Career Breakdown"
+                className="w-full h-auto block"
+              />
+            </div>
+            <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-2 w-full mb-6">
+              <li><strong className="font-normal">Interactive Simulation:</strong> AI guides users through studying for a trade and working in the field.</li>
+              <li><strong className="font-normal">Explore In-Demand Trades:</strong> Users browse trades that are actually needed.</li>
+              <li><strong className="font-normal">Career Breakdown Page:</strong> Users see the job skills, routine, and requirements needed.</li>
+            </ul>
+            <div className="rounded overflow-hidden w-full">
+              <img
+                src="/images/forge-userflow.png"
+                alt="Forge user flow — explore careers, understand path, compare outcomes"
+                className="w-full h-auto block"
+              />
             </div>
           </section>
 
-          <section id="design-decisions" className="mb-12 md:mb-16 scroll-mt-24">
+          <section id="motion-graphics" className="mb-12 md:mb-16 scroll-mt-24">
             <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
-              Design Decisions
-            </div>
-            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
-              We designed Forge to feel like a guide, not a brochure.
-            </h2>
-            <div className="space-y-8 mb-10">
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                <div className="w-full md:w-1/2 flex-shrink-0 aspect-[3/2] md:aspect-[4/3] min-h-[240px] md:min-h-0 bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Structure over scroll</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                    Structure over scroll
-                  </h3>
-                  <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                    We broke content into labeled sections instead of long paragraphs. Users should be able to scan, jump, and compare without getting lost.
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                <div className="w-full md:w-1/2 flex-shrink-0 aspect-[3/2] md:aspect-[4/3] min-h-[240px] md:min-h-0 bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Financial info</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                    Financial info isn’t hidden
-                  </h3>
-                  <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                    Cost and income were treated as core content, not an afterthought. Because that’s what makes the decision real for this target user.
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                <div className="w-full md:w-1/2 flex-shrink-0 aspect-[3/2] md:aspect-[4/3] min-h-[240px] md:min-h-0 bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Neutral tone</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                    Neutral tone and visuals
-                  </h3>
-                  <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-                    No “trades are awesome” messaging. Just clear information that helps someone make a call.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 mt-10">
               Motion Design
             </div>
-            <h3 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
               Motion used as feedback, not decoration.
-            </h3>
+            </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-6">
               I created a small icon set and added simple animations to support meaning and state changes. The motion is minimal on purpose — Forge is an information-heavy product, so the UI needs to stay calm and readable.
             </p>
-            <div className="aspect-[3/2] max-w-xl min-h-[220px] bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-              <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">Motion design</span>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 w-full">
+              {MOTION_ANIMATIONS.slice(0, 3).map(({ src, scale }) => (
+                <div
+                  key={src}
+                  className="relative rounded overflow-hidden flex items-center justify-center bg-brand-dark/5 dark:bg-brand-light/5 w-full aspect-square"
+                >
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ transform: `scale(${scale})` }}>
+                    <LottieFromUrl src={src} className="w-full h-full" />
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
@@ -340,30 +346,20 @@ const ForgeCaseStudy: React.FC = () => {
             <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
               Final Design
             </div>
-            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
               A clear, step-by-step experience for exploring trades careers.
             </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-8">
               The final product is built around one goal: help students understand what they’re choosing, what it takes, and what it leads to.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-              {[1, 2, 3, 4].map((i) => (
-                <figure key={i}>
-                  <div className="aspect-[4/3] bg-brand-dark/10 dark:bg-brand-light/10 rounded overflow-hidden flex items-center justify-center">
-                    <span className="font-mono text-xs uppercase text-brand-dark/40 dark:text-brand-light/40">
-                      Screen {i}
-                    </span>
-                  </div>
-                </figure>
-              ))}
-            </div>
+            <FinalDesignCarousel />
           </section>
 
           <section id="reflection" className="mb-12 md:mb-16 scroll-mt-24">
             <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
               Reflection
             </div>
-            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+            <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
               What I learned
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -389,7 +385,7 @@ const ForgeCaseStudy: React.FC = () => {
           <footer className="border-t-2 border-brand-dark dark:border-brand-light pt-8 mt-12">
             <Link
               to="/#case-studies"
-              className="font-sans font-normal text-lg uppercase hover:opacity-60 transition-all text-brand-dark dark:text-brand-light underline underline-offset-4"
+              className="font-sans font-normal text-lg uppercase transition-colors text-brand-dark dark:text-brand-light underline underline-offset-4 hover:text-orange-500 dark:hover:text-orange-400"
             >
               Back to Case Studies →
             </Link>

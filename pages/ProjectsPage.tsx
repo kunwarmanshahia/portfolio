@@ -2,13 +2,16 @@
 import React from 'react';
 import ProjectCard from '../components/ProjectCard';
 
+const projects = [
+  { id: 'p1', title: 'Triunity Martial Arts', description: 'Client · Graphic Design', image: 'https://picsum.photos/1200/800?random=11' },
+  { id: 'p2', title: 'BUBS', description: 'Visual Branding · Graphic Design', image: 'https://picsum.photos/1200/800?random=12' },
+  { id: 'p3', title: 'GAdventures Magazine', description: 'Typography · Layout Design', image: 'https://picsum.photos/1200/800?random=13' },
+  { id: 'p4', title: 'Broken Yolk Menu', description: 'Branding · Layout Design', image: 'https://picsum.photos/1200/800?random=14' },
+  { id: 'p5', title: 'GEARBOX Magazine', description: 'Typography · Layout Design', image: 'https://picsum.photos/1200/800?random=15' },
+  { id: 'p6', title: '"La Haine"', description: 'Visual Branding · Graphic Design', image: 'https://picsum.photos/1200/800?random=16' },
+];
+
 const ProjectsPage: React.FC = () => {
-  const projects = Array.from({ length: 9 }).map((_, i) => ({
-    id: `p${i}`,
-    title: `Project ${String.fromCharCode(65 + i)}`,
-    description: `Conceptual design exploration No. ${i + 1}`,
-    image: `https://picsum.photos/1200/800?random=${i + 20}`,
-  }));
 
   return (
     <div className="px-4 md:px-8 lg:px-12 py-12 md:py-24 max-w-[1920px] mx-auto w-full space-y-12">
