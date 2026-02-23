@@ -199,7 +199,7 @@ const ForgeCaseStudy: React.FC = () => {
                 A career pathway app that makes trades careers easier to understand.
               </h2>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
-                Forge is built for high school students from financially struggling households who need a clear view of what they’re choosing.
+                I built Forge for high school students from financially struggling households who need a clear view of what they’re choosing.
               </p>
               <div className="rounded overflow-hidden mb-6 w-full">
                 <img
@@ -216,7 +216,7 @@ const ForgeCaseStudy: React.FC = () => {
                 Most students don’t avoid trades because they hate them — they avoid them because they don’t understand them.
               </p>
               <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2 mt-6">
-                The current experience looks like this
+                The current experience looks like this:
               </h3>
               <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-4">
                 <li>Information is scattered across different sites and programs.</li>
@@ -231,11 +231,11 @@ const ForgeCaseStudy: React.FC = () => {
           </section>
 
           <section id="solution" className="mb-12 md:mb-16 scroll-mt-24">
-            <div className="pt-4 border-t-2 border-brand-dark dark:border-brand-light">
-              <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2">
+            <div className="border-t-2 border-brand-dark dark:border-brand-light">
+              <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4">
                 Solution
               </div>
-              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
+              <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
                 A decision-support product for trades careers.
               </h2>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
@@ -249,7 +249,7 @@ const ForgeCaseStudy: React.FC = () => {
                 />
               </div>
               <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                What Forge includes
+                My design components for Forge:
               </h3>
               <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-6">
                 <li>AI career advisor (allows you to experience a trade)</li>
@@ -286,7 +286,7 @@ const ForgeCaseStudy: React.FC = () => {
               <li>Students feel insecure about requirements and how to start.</li>
             </ul>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-              So the product direction became obvious: don’t add more pages. Make the few important pages easier to understand and easier to trust.
+              So the product direction became obvious to me: don’t add more pages. Make just a few important pages easier to understand and easier to trust.
             </p>
           </section>
 
@@ -304,18 +304,14 @@ const ForgeCaseStudy: React.FC = () => {
                 className="w-full h-auto block"
               />
             </div>
+            <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
+              I structured the product around three intentional stages:
+            </p>
             <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-2 w-full mb-6">
               <li><strong className="font-normal">Interactive Simulation:</strong> AI guides users through studying for a trade and working in the field.</li>
               <li><strong className="font-normal">Explore In-Demand Trades:</strong> Users browse trades that are actually needed.</li>
               <li><strong className="font-normal">Career Breakdown Page:</strong> Users see the job skills, routine, and requirements needed.</li>
             </ul>
-            <div className="rounded overflow-hidden w-full">
-              <img
-                src="/images/forge-userflow.png"
-                alt="Forge user flow — explore careers, understand path, compare outcomes"
-                className="w-full h-auto block"
-              />
-            </div>
           </section>
 
           <section id="motion-graphics" className="mb-12 md:mb-16 scroll-mt-24">
@@ -323,7 +319,7 @@ const ForgeCaseStudy: React.FC = () => {
               Motion Design
             </div>
             <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
-              Motion used as feedback, not decoration.
+              Motion used as feedback.
             </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-6">
               I created a small icon set and added simple animations to support meaning and state changes. The motion is minimal on purpose — Forge is an information-heavy product, so the UI needs to stay calm and readable.
@@ -350,7 +346,7 @@ const ForgeCaseStudy: React.FC = () => {
               A clear, step-by-step experience for exploring trades careers.
             </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-8">
-              The final product is built around one goal: help students understand what they’re choosing, what it takes, and what it leads to.
+              I built the final product around one goal: help students understand what they’re choosing, what it takes, and what it leads to.
             </p>
             <FinalDesignCarousel />
           </section>
@@ -365,7 +361,7 @@ const ForgeCaseStudy: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                  Clarity beats features
+                  Subtract instead of adding more
                 </h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed text-sm md:text-base">
                   When the problem is uncertainty, the best “innovation” is making information easier to understand and easier to trust.
@@ -373,10 +369,10 @@ const ForgeCaseStudy: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                  Small decisions matter
+                  Communication matters the most
                 </h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed text-sm md:text-base">
-                  Sectioning, wording, hierarchy, when to show financials — they matter more than adding extra screens.
+                  We worked on this project for four months, and whenever communication slipped, progress slowed down. Clear, consistent check-ins ended up being just as important as the design work itself.
                 </p>
               </div>
             </div>

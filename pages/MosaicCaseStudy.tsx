@@ -172,11 +172,10 @@ const MosaicCaseStudy: React.FC = () => {
               </h2>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
                 Early-stage creatives often struggle to build strong portfolios due to a lack of real-world experience, unclear project direction, and uncertainty about what employers expect.
-                Many students and new graduates know how to design but don’t know what to design.
               </p>
 
               <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2 mt-6">
-                The current experience looks like this
+                The current experience looks like this:
               </h3>
               <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-4">
                 <li>Project ideas are scattered or too open-ended.</li>
@@ -184,7 +183,7 @@ const MosaicCaseStudy: React.FC = () => {
                 <li>Progress and finished work are hard to track in one place.</li>
               </ul>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-0">
-                So users either delay starting, pick random prompts, or produce work that doesn't tell a clear story.
+                Many students and new graduates have the tools but don't know what to build.
               </p>
             </div>
           </section>
@@ -198,17 +197,16 @@ const MosaicCaseStudy: React.FC = () => {
                 AI-generated project scenarios that feel like real client briefs.
               </h2>
               <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-4">
-                Mosaic provides users with AI-generated, customizable project scenarios that simulate real client briefs.
-                Users can create projects, complete defined tasks, and add finished work directly to their portfolio.
+                Mosaic provides users with AI-generated, customizable project scenarios that simulate real clients. Users can create projects, complete defined tasks, and add finished work directly to their portfolio.
               </p>
               <div className="rounded overflow-hidden mb-6 w-full">
                 <img src="/images/mosaic-solution.png" alt="Mosaic — solution overview" className="w-full h-auto block" />
               </div>
               <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                What Mosaic includes
+                What Mosaic includes:
               </h3>
               <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-6">
-                <li>Guided project scenarios (realistic briefs and tasks)</li>
+                <li>AI Guided project scenarios (realistic projects and tasks)</li>
                 <li>Clear task breakdowns and progress tracking</li>
                 <li>Add completed work directly to your portfolio</li>
               </ul>
@@ -225,11 +223,14 @@ const MosaicCaseStudy: React.FC = () => {
             <div className="rounded overflow-hidden mb-6 w-full">
               <img src="/images/mosaic-userpersonas.png" alt="Mosaic — user personas and research" className="w-full h-auto block" />
             </div>
-            <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
-              Research focused on understanding how students and early-career creatives approach portfolio building.
-              Key insights revealed that users often feel overwhelmed when starting new projects and value guidance over open-ended prompts.
-              Usability testing further highlighted the importance of clear navigation, visible primary actions, and confirmation feedback during key moments such as saving and adding work to a portfolio.
-            </p>
+            <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2 mt-6">
+              Through my research, I realized:
+            </h3>
+            <ul className="font-sans text-brand-dark dark:text-brand-light leading-relaxed list-disc pl-5 space-y-1 mb-4">
+              <li>Users feel overwhelmed when starting new projects and need structure, not just a blank canvas.</li>
+              <li>Guidance matters more than freedom — open-ended prompts cause hesitation, not creativity.</li>
+              <li>Clear navigation, visible actions, and confirmation feedback are critical at key moments like saving and adding work to a portfolio.</li>
+            </ul>
           </section>
 
           <section id="core-flows" className="mb-12 md:mb-16 scroll-mt-24">
@@ -237,30 +238,30 @@ const MosaicCaseStudy: React.FC = () => {
               Core Flows
             </div>
             <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem]">
-              Fast onboarding → Create a project → Track progress → Add to portfolio.
+              Accessibility first. Then the core flow.
             </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-6">
-              The core user flows were designed to support fast onboarding and efficient project creation. These flows were tested to ensure minimal friction and intuitive progression.
+              Before mapping out any user flows, I made sure Mosaic was usable for everyone. From there, the core flow was kept intentionally simple — onboard quickly, create a project, track your tasks, and add to your portfolio.
             </p>
             <div className="space-y-8 w-full">
               {[
                 {
-                  label: 'Onboarding',
+                  label: 'Accessibility',
                   img: '/images/mosaic-coreflows1.png',
-                  title: 'Account creation and onboarding',
-                  desc: 'Get users into a project quickly without overwhelming them up front.',
+                  title: 'Light mode, dark mode, and colourblind mode',
+                  desc: 'Accessibility was a core priority from the start. We designed three display modes — including a dedicated colourblind mode — so every user can interact with Mosaic comfortably.',
                 },
                 {
-                  label: 'New project',
+                  label: 'Onboarding',
                   img: '/images/mosaic-coreflows2.png',
-                  title: 'Create a project from a scenario prompt',
-                  desc: 'Generate a realistic brief based on skills, then start with clear next steps.',
+                  title: 'Email-based onboarding with a verification code',
+                  desc: 'Users sign up by entering their email and receiving a one-time code — no passwords, no friction. Quick to start, easy to trust.',
                 },
                 {
-                  label: 'Tasks',
+                  label: 'Project creation',
                   img: '/images/mosaic-coreflows3.png',
-                  title: 'Complete tasks and save progress',
-                  desc: 'Make it easy to track what’s done and what’s next, with clear confirmation.',
+                  title: 'Project ideation as a simple questionnaire',
+                  desc: 'Instead of a blank prompt, users answer a short set of questions. Mosaic uses their answers to generate a tailored project brief — structured, relevant, and ready to start.',
                 },
               ].map((flow) => (
                 <div key={flow.title} className="w-full">
@@ -286,14 +287,26 @@ const MosaicCaseStudy: React.FC = () => {
               Visual system and feedback — without getting in the way.
             </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-6">
-              A modular shape language reflects the concept of a mosaic—individual pieces coming together to form a complete whole. Motion and visual feedback support state changes and primary actions.
+              I wanted to use modular shapes to reflect the concept of a mosaic — individual pieces coming together to form a complete whole, while staying true to the app's core value: simplicity.
             </p>
-            <div className="flex flex-col gap-6 w-full max-w-full">
-              <div className="rounded overflow-hidden w-full">
-                <img src="/images/mosaic-graphicdesign1.png" alt="Mosaic — graphic design 1" className="w-full h-auto max-w-full object-contain" />
+            <div className="flex flex-col gap-8 w-full max-w-full">
+              <div>
+                <div className="rounded overflow-hidden w-full mb-4">
+                  <img src="/images/mosaic-graphicdesign1.png" alt="Mosaic — Gems user avatars" className="w-full h-auto max-w-full object-contain" />
+                </div>
+                <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">These are called "Gems"</h3>
+                <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
+                  I created user avatars called "Gems" (yes, I did it before Google — just without the AI). They appear during profile creation and give each user a distinct, personal identity within the app while staying true to brand colours.
+                </p>
               </div>
-              <div className="rounded overflow-hidden w-full">
-                <img src="/images/mosaic-graphicdesign2.png" alt="Mosaic — graphic design 2" className="w-full h-auto max-w-full object-contain" />
+              <div>
+                <div className="rounded overflow-hidden w-full mb-4">
+                  <img src="/images/mosaic-graphicdesign2.png" alt="Mosaic — onboarding and project creation graphics" className="w-full h-auto max-w-full object-contain" />
+                </div>
+                <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">Simplicity is the best</h3>
+                <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
+                  I created simple graphics for the onboarding and project creation modules. I believe in taking away rather than adding — simplicity isn't just aesthetic, it helps people learn better.
+                </p>
               </div>
             </div>
           </section>
@@ -306,8 +319,7 @@ const MosaicCaseStudy: React.FC = () => {
               A clean, modern interface focused on usability and readability.
             </h2>
             <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed mb-8">
-              The final design presents a clean, modern interface focused on usability and readability. High-contrast elements guide attention to primary actions, while consistent spacing and hierarchy reduce cognitive load.
-              The app supports both light and dark modes to accommodate user preferences and accessibility needs.
+              The final design presents a clean, modern interface focused on accessibility, usability, and readability. Coloured elements guide attention to primary actions, while consistent spacing and hierarchy reduce cognitive load.
             </p>
             <MosaicFinalDesignCarousel />
           </section>
@@ -322,18 +334,18 @@ const MosaicCaseStudy: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                  Clarity beats features
+                  Keep on learning
                 </h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed text-sm md:text-base">
-                  When the problem is uncertainty, the best "innovation" is making information easier to understand and easier to trust.
+                  Throughout the process, I encountered design techniques that pushed me out of my comfort zone. Instead of resisting them, I leaned in — and that's where the most growth happened.
                 </p>
               </div>
               <div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
-                  Small decisions matter
+                  The power of difference
                 </h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed text-sm md:text-base">
-                  Sectioning, wording, hierarchy, when to show financials — they matter more than adding extra screens.
+                  I usually gravitate toward minimalism — muted tones, clean layouts. But Mosaic called for something different. I used vibrant colours intentionally, to create an environment that feels energetic and encourages learning without feeling overwhelming.
                 </p>
               </div>
             </div>

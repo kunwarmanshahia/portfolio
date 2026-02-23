@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
           <button
             onClick={onToggleChat}
             aria-label={chatOpen ? 'Close Ask My AI chat' : 'Open Ask My AI chat'}
-            className="group/kai flex items-center gap-1.5 font-mono font-bold text-base md:text-lg text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none"
+            className="group/kai flex items-center gap-1.5 font-sans font-medium text-sm md:text-base text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
