@@ -11,7 +11,11 @@ const Cursor: React.FC<CursorProps> = ({ theme }) => {
   const [cursor, setCursor] = useState<{ x: number; y: number; overClickable: boolean } | null>(null);
 
   useEffect(() => {
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) return;
+
     const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
       const target = e.target as Element;
       const overClickable = target.closest(CLICKABLE_SELECTOR) !== null;
       setCursor({ x: e.clientX, y: e.clientY, overClickable });

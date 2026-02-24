@@ -15,6 +15,8 @@ export interface Project {
   title: string;
   description: string;
   image: string;
+  link?: string;
+  objectFit?: 'cover' | 'contain';
 }
 
 export type Theme = 'light' | 'dark';

@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CaseStudyCard from '../components/CaseStudyCard';
 import ProjectCard from '../components/ProjectCard';
 import { Logo } from '../components/Logo';
 
 const Home: React.FC = () => {
-  const [projectsExpanded, setProjectsExpanded] = useState(false);
+  const selectWork = [
+    {
+      id: 'sw1',
+      title: 'Clover X Barbershop',
+      appName: 'Client Branding',
+      category: '2025',
+      image: '/images/cxb-1.png',
+    },
+    {
+      id: 'sw2',
+      title: 'La Haine',
+      appName: 'Print Design',
+      category: '2025',
+      image: '/images/lahaine-1.png',
+    },
+  ];
+
   const caseStudies = [
     {
       id: '1',
@@ -23,19 +39,33 @@ const Home: React.FC = () => {
   ];
 
   const summaryProjects = [
-    { id: 'p1', title: 'Triunity Martial Arts', description: 'Client · Graphic Design', image: 'https://picsum.photos/1200/800?random=11' },
-    { id: 'p2', title: 'BUBS', description: 'Visual Branding · Graphic Design', image: 'https://picsum.photos/1200/800?random=12' },
-    { id: 'p3', title: 'GAdventures Magazine', description: 'Typography · Layout Design', image: 'https://picsum.photos/1200/800?random=13' },
-    { id: 'p4', title: 'Broken Yolk Menu', description: 'Branding · Layout Design', image: 'https://picsum.photos/1200/800?random=14' },
-    { id: 'p5', title: 'GEARBOX Magazine', description: 'Typography · Layout Design', image: 'https://picsum.photos/1200/800?random=15' },
-    { id: 'p6', title: '"La Haine"', description: 'Visual Branding · Graphic Design', image: 'https://picsum.photos/1200/800?random=16' },
+    { id: 'p1', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.png', link: '/project/clover-x-barbershop' },
+    { id: 'p2', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.png', link: '/project/la-haine' },
+    { id: 'p3', title: 'Triunity Martial Arts', description: 'Client Branding · 2024 / 2025', image: '/images/triunity-1.png', link: '/project/triunity', objectFit: 'contain' },
+    { id: 'p4', title: 'GEARBOX', description: 'Layout Design · 2025', image: 'https://picsum.photos/1200/800?random=13' },
+    { id: 'p5', title: 'Broken Yolk', description: 'Layout Design · 2025', image: 'https://picsum.photos/1200/800?random=14' },
+    { id: 'p6', title: 'Producer Logos', description: 'Typographic Design · 2024 / 2025', image: 'https://picsum.photos/1200/800?random=16' },
   ];
 
   return (
-    <div className="px-4 md:px-8 lg:px-12 pt-4 md:pt-6 pb-8 md:pb-16 max-w-[1920px] mx-auto w-full space-y-20 md:space-y-24 [&>*:nth-child(2)]:!mt-5 md:[&>*:nth-child(2)]:!mt-7">
+    <div className="px-4 md:px-8 lg:px-12 pt-4 md:pt-6 pb-8 md:pb-16 max-w-[1920px] mx-auto w-full space-y-10 md:space-y-14 [&>*:nth-child(2)]:!mt-10 md:[&>*:nth-child(2)]:!mt-14 [&>*:nth-child(3)]:!mt-10 md:[&>*:nth-child(3)]:!mt-14">
+      {/* Select Work heading */}
+      <section className="space-y-4">
+        <div className="pt-4">
+          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
+            Select Work.
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
+          {selectWork.map((study) => (
+            <CaseStudyCard key={study.id} study={study} />
+          ))}
+        </div>
+      </section>
+
       {/* Case Studies Section */}
       <section id="case-studies" className="space-y-4">
-        <div className="pt-4 flex justify-between items-baseline">
+        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
           <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
             Case Studies.
           </h2>
@@ -49,57 +79,21 @@ const Home: React.FC = () => {
 
       {/* Projects Section — same spacing as Case Studies (header + border) */}
       <section className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-8 md:pt-10">
+        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
           <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
             Projects.
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-          {summaryProjects.slice(0, 2).map((project) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4">
+          {summaryProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
-        {/* Expandable: remaining projects with smooth height animation */}
-        <div
-          className="grid transition-[grid-template-rows] duration-300 ease-in-out"
-          style={{ gridTemplateRows: projectsExpanded ? '1fr' : '0fr' }}
-        >
-          <div className="min-h-0 overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-              {summaryProjects.slice(2).map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={() => setProjectsExpanded((v) => !v)}
-          className="group flex items-center justify-center w-full py-4 text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark dark:focus-visible:ring-brand-light rounded-full"
-          aria-expanded={projectsExpanded}
-        >
-          <span className="flex items-center justify-center w-14 h-14 rounded-full border-2 border-current transition-colors group-hover:border-orange-500 dark:group-hover:border-orange-400">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={`transition-transform duration-300 ease-in-out ${projectsExpanded ? 'rotate-180' : ''}`}
-            >
-              <path d="M12 6V18M12 18L7 13M12 18L17 13" />
-            </svg>
-          </span>
-        </button>
       </section>
 
       {/* About me. */}
       <section id="about" className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-8 md:pt-10">
+        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
           <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
             My name is Kunwar.
           </h2>

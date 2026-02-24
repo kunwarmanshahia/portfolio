@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Resume', path: 'https://example.com/resume.pdf', external: true },
+    { name: 'Resume', path: '/KunwarManshahia_Resume.pdf', external: true },
   ];
 
   const isDark = theme === 'dark';
