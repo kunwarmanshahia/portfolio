@@ -20,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const onLogoMouseMove = useCallback((e: React.MouseEvent) => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
     const el = logoRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -39,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
   }, []);
 
   const navLinks = [
-    { name: 'Resume', path: '/KUNWARMANSHAHIARESUME.PDF', external: true },
+    { name: 'Resume', path: '/resume', external: false },
   ];
 
   const isDark = theme === 'dark';
@@ -53,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
           {/* Mobile hamburger */}
           <button
             type="button"
-            className="md:hidden flex items-center text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            className="md:hidden flex items-center text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             onClick={() => setMobileMenuOpen(prev => !prev)}
           >
@@ -88,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
           <Link
             ref={logoRef}
             to="/"
-            className="flex items-center transition-colors text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 py-1 pr-2 absolute left-1/2 -translate-x-1/2 md:static md:transform-none"
+            className="flex items-center transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 py-1 pr-2 absolute left-1/2 -translate-x-1/2 md:static md:transform-none"
             aria-label="Kunwar Manshahia – Home"
             onMouseMove={onLogoMouseMove}
             onMouseLeave={onLogoMouseLeave}
@@ -110,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
                 href={link.path}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-colors text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400"
+                className="transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400"
               >
                 {link.name}
               </a>
@@ -118,7 +119,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
               <Link
                 key={link.name}
                 to={link.path}
-                className={`${location.pathname === link.path ? 'underline underline-offset-4' : ''} transition-colors text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400`}
+                className={`${location.pathname === link.path ? 'underline underline-offset-4' : ''} transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400`}
               >
                 {link.name}
               </Link>
@@ -129,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
           <button
             onClick={onToggleChat}
             aria-label={chatOpen ? 'Close Ask My AI chat' : 'Open Ask My AI chat'}
-            className="group/kai flex items-center gap-1.5 font-sans font-medium text-sm md:text-base text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none"
+            className="group/kai flex items-center gap-1.5 font-sans font-medium text-sm md:text-base text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors focus:outline-none"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -169,22 +170,20 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
 
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-3 border-t border-brand-dark/10 dark:border-brand-light/10 pt-3 space-y-2 text-xs font-sans text-brand-dark dark:text-brand-light">
-            <a
-              href="/KUNWARMANSHAHIARESUME.PDF"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block underline underline-offset-4 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+          <div className="md:hidden mt-3 border-t border-brand-dark/10 dark:border-brand-light/10 pt-3 space-y-3 text-sm font-sans text-brand-dark dark:text-brand-light">
+            <Link
+              to="/resume"
+              className="block underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               resume
-            </a>
+            </Link>
             <button
               type="button"
               onClick={() => {
                 onToggleTheme();
               }}
-              className="block w-full text-left underline underline-offset-4 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+              className="block w-full text-left underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
             >
               {isDark ? 'light mode' : 'dark mode'}
             </button>

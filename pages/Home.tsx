@@ -37,12 +37,12 @@ const Home: React.FC = () => {
   ];
 
   const summaryProjects = [
-    { id: 'p1', title: 'Triunity Martial Arts', description: 'Client Branding · 2024 / 2025', image: '/images/triunity-1.png', link: '/project/triunity', objectFit: 'contain' },
-    { id: 'p2', title: 'Signatures for Sound', description: 'Client Branding · 2024 / 2025', image: '/images/sfs-cover.png?v=2', link: '/project/signatures-for-sound' },
-    { id: 'p3', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.png', link: '/project/clover-x-barbershop' },
-    { id: 'p4', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.png', link: '/project/la-haine' },
-    { id: 'p5', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.png', link: '/project/broken-yolk', objectFit: 'cover' },
-    { id: 'p6', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.png', link: '/project/gearbox', objectFit: 'cover' },
+    { id: 'p1', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.png', link: '/project/triunity', objectFit: 'contain' },
+    { id: 'p2', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.png?v=2', link: '/project/signatures-for-sound' },
+    { id: 'p3', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.png', link: '/project/broken-yolk', objectFit: 'cover' },
+    { id: 'p4', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.png', link: '/project/gearbox', objectFit: 'cover' },
+    { id: 'p5', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.png', link: '/project/clover-x-barbershop' },
+    { id: 'p6', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.png', link: '/project/la-haine' },
   ];
 
   return (
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
             Select Work.
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
           {selectWorkProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
             Case Studies.
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
           {caseStudies.map((study) => (
             <CaseStudyCard key={study.id} study={study} />
           ))}
@@ -99,15 +99,15 @@ const Home: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 pt-4">
           <div className="space-y-6">
             <div className="space-y-4 text-lg md:text-xl font-sans font-light text-brand-dark dark:text-brand-light opacity-90 max-w-xl leading-relaxed">
-              <p>Before anything else, I’m a creative.</p>
+              <p>Before anything else, I’m a communicator. I use design as a language to connect people, ideas, and culture.</p>
               <p>
-                I work across product and visual design, building experiences within business, technology, and culture.
+                I work across product and visual design, building experiences within business and technology.
               </p>
               <p>
-                Before design, I became involved in music at a young age — from digging through rows of vinyl to producing sounds, while immersing myself in fashion and emerging design trends.
+                Before design, I was heavily involved in music from a young age — digging through rows of vinyl, producing sounds, and immersing myself in emerging acoustic, visual, and cultural trends.
               </p>
               <p>
-                That period of my life built my creative foundation and shaped my understanding of rhythm and art direction; it still influences how I approach design today.
+                That period shaped my creative foundation and taught me how creation can translate into emotion — it's something that continues to influence how I approach design today.
               </p>
             </div>
             <p className="font-mono text-xs md:text-sm text-brand-dark/70 dark:text-brand-light/70">
@@ -129,7 +129,7 @@ const Home: React.FC = () => {
                 <li>
                   <a
                     href="mailto:bykunwar@gmail.com"
-                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors hover:text-orange-500 dark:hover:text-orange-400"
+                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors md:hover:text-orange-500 md:dark:hover:text-orange-400"
                   >
                     Email
                   </a>
@@ -139,17 +139,15 @@ const Home: React.FC = () => {
                     href="https://linkedin.com/in/kunwarmanshahia"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors hover:text-orange-500 dark:hover:text-orange-400"
+                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors md:hover:text-orange-500 md:dark:hover:text-orange-400"
                   >
                     LinkedIn
                   </a>
                 </li>
                 <li>
                   <a
-                    href="/KUNWARMANSHAHIARESUME.PDF"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors hover:text-orange-500 dark:hover:text-orange-400"
+                    href="/#/resume"
+                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors md:hover:text-orange-500 md:dark:hover:text-orange-400"
                   >
                     Resume
                   </a>

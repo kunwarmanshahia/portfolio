@@ -18,7 +18,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isLarge }) => {
           className={`w-full h-full ${project.objectFit === 'contain' ? 'object-cover scale-105' : 'object-cover'}`}
           style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
         />
-        <div className="absolute inset-0 bg-orange-400/10 transition-opacity duration-700 group-hover:opacity-0" />
+        <div className="absolute inset-0 bg-orange-400/10 transition-opacity duration-700 group-hover:opacity-0 hidden md:block" />
       </div>
       
       <div className="flex justify-between items-baseline tracking-tight">

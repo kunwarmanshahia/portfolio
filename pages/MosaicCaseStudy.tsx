@@ -37,7 +37,7 @@ const MosaicFinalDesignCarousel: React.FC = () => {
         <button
           type="button"
           onClick={() => setPage((p) => (p === 0 ? totalPages - 1 : p - 1))}
-          className="font-sans text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2 rounded border border-brand-dark/20 dark:border-brand-light/20 text-lg"
+          className="font-sans text-brand-dark/70 dark:text-brand-light/70 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors p-2 rounded border border-brand-dark/20 dark:border-brand-light/20 text-lg"
           aria-label="Previous"
         >
           <span aria-hidden>←</span>
@@ -48,7 +48,7 @@ const MosaicFinalDesignCarousel: React.FC = () => {
         <button
           type="button"
           onClick={() => setPage((p) => (p === totalPages - 1 ? 0 : p + 1))}
-          className="font-sans text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2 rounded border border-brand-dark/20 dark:border-brand-light/20 text-lg"
+          className="font-sans text-brand-dark/70 dark:text-brand-light/70 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors p-2 rounded border border-brand-dark/20 dark:border-brand-light/20 text-lg"
           aria-label="Next"
         >
           <span aria-hidden>→</span>
@@ -61,13 +61,19 @@ const MosaicFinalDesignCarousel: React.FC = () => {
 const MosaicCaseStudy: React.FC = () => {
   return (
     <div className="px-4 md:px-8 lg:px-12 pt-[1.8rem] md:pt-[3.6rem] pb-12 md:pb-24 max-w-[1920px] mx-auto w-full">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-sm font-sans font-medium text-brand-dark/60 dark:text-brand-light/60 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors mb-6 lg:hidden"
+      >
+        ← Back
+      </Link>
       <div className="flex flex-col lg:flex-row lg:gap-12 xl:gap-16">
-        {/* Sticky sidebar nav */}
-        <aside className="lg:w-48 xl:w-52 flex-shrink-0 order-2 lg:order-1">
+        {/* Sticky sidebar nav (desktop only) */}
+        <aside className="hidden lg:block lg:w-48 xl:w-52 flex-shrink-0 order-2 lg:order-1">
           <nav className="lg:sticky lg:top-24 space-y-1">
             <Link
               to="/#case-studies"
-              className="flex items-center gap-2 font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-6"
+              className="flex items-center gap-2 font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors mb-6"
             >
               <span aria-hidden>←</span>
               <span>BACK</span>
@@ -77,7 +83,7 @@ const MosaicCaseStudy: React.FC = () => {
                 key={id}
                 type="button"
                 onClick={() => scrollTo(id)}
-                className="block w-full text-left font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-1"
+                className="block w-full text-left font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors py-1"
               >
                 {label}
               </button>
@@ -354,7 +360,7 @@ const MosaicCaseStudy: React.FC = () => {
           <footer className="border-t-2 border-brand-dark dark:border-brand-light pt-8 mt-12">
             <Link
               to="/#case-studies"
-              className="font-sans font-normal text-lg uppercase transition-colors text-brand-dark dark:text-brand-light underline underline-offset-4 hover:text-orange-500 dark:hover:text-orange-400"
+              className="font-sans font-normal text-lg uppercase transition-colors text-brand-dark dark:text-brand-light underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400"
             >
               Back to Case Studies →
             </Link>

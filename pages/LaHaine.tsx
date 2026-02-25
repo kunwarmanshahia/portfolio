@@ -6,7 +6,7 @@ const LaHaine: React.FC = () => {
     <div className="px-4 md:px-8 lg:px-12 pt-4 md:pt-6 pb-4 md:pb-6 max-w-[1920px] mx-auto w-full">
       <Link
         to="/"
-        className="inline-flex items-center gap-2 text-sm font-sans font-medium text-brand-dark/60 dark:text-brand-light/60 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-8"
+        className="inline-flex items-center gap-2 text-sm font-sans font-medium text-brand-dark/60 dark:text-brand-light/60 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors mb-8"
       >
         ← Back
       </Link>
@@ -25,7 +25,7 @@ const LaHaine: React.FC = () => {
         <img
           src="/images/lahaine-1.png"
           alt="La Haine – Cover"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
       </div>
 
