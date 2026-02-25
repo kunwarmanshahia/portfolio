@@ -357,7 +357,7 @@ const ForgeCaseStudy: React.FC = () => {
             <FinalDesignCarousel />
           </section>
 
-          <section id="reflection" className="mb-12 md:mb-16 scroll-mt-24">
+          <section id="reflection" className="mb-12 md:mb-4 scroll-mt-24">
             <div className="font-mono text-sm uppercase tracking-widest text-brand-dark/70 dark:text-brand-light/70 mb-2 pt-4 border-t-2 border-brand-dark dark:border-brand-light">
               Reflection
             </div>
@@ -383,15 +383,6 @@ const ForgeCaseStudy: React.FC = () => {
               </div>
             </div>
           </section>
-
-          <footer className="border-t-2 border-brand-dark dark:border-brand-light pt-8 mt-12">
-            <Link
-              to="/#case-studies"
-              className="font-sans font-normal text-lg uppercase transition-colors text-brand-dark dark:text-brand-light underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400"
-            >
-              Back to Case Studies →
-            </Link>
-          </footer>
         </article>
       </div>
     </div>
