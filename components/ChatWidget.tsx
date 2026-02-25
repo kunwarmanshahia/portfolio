@@ -28,6 +28,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
   const [error, setError] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [slideIn, setSlideIn] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -40,6 +41,17 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
       return () => cancelAnimationFrame(t);
     }
   }, [open]);
+
+  useEffect(() => {
+    const updateIsMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
+    };
+    updateIsMobile();
+    window.addEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
+  }, []);
 
   const suggestedQuestions = [
     'tell me about your design process',
@@ -166,57 +178,33 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
 
   if (!open) return null;
 
+  const effectiveWidth = isMobile ? '100%' : width;
+  const containerClasses = isMobile
+    ? `fixed bottom-0 left-0 right-0 z-40 h-[75vh] max-h-[640px] ${chatBg} shadow-xl border-t-2 ${borderClass} flex flex-col transition-transform duration-300 ease-out rounded-t-2xl`
+    : `fixed top-0 right-0 z-40 h-full ${chatBg} shadow-xl border-l-2 ${borderClass} flex flex-col transition-transform duration-300 ease-out`;
+
   return (
     <div
-      className={`fixed top-0 right-0 z-40 h-full ${chatBg} shadow-xl border-l-2 ${borderClass} flex flex-col transition-transform duration-300 ease-out`}
+      className={containerClasses}
       style={{
-        width,
+        width: effectiveWidth,
         transform: slideIn ? 'translateX(0)' : 'translateX(100%)',
       }}
     >
       <div className="flex flex-col h-full min-h-0">
       {/* Header */}
-      <div className={`flex items-center justify-between border-b-2 ${borderClass} px-6 py-4 shrink-0 ${textClass}`}>
-          <div className="flex items-center gap-2">
-            {/* Active diamond symbol */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              className="fill-orange-500 cursor-pointer"
-              onClick={onClose}
-            >
-              <path d="M6 0L12 6L6 12L0 6L6 0Z" />
-            </svg>
-            
-            <span className="font-mono font-medium">kai</span>
-            
-            {/* Info icon with hover tooltip */}
-            <div className="relative">
-              <button
-                type="button"
-                onMouseEnter={() => setShowTooltip(true)}
-                onMouseLeave={() => setShowTooltip(false)}
-                className="flex items-center justify-center w-5 h-5 rounded-full border border-current opacity-60 hover:opacity-100 transition-opacity"
-                aria-label="About kai"
-              >
-                <span className="text-xs">i</span>
-              </button>
-              
-              {showTooltip && (
-                <div className={`absolute top-6 left-1/2 -translate-x-1/2 w-48 p-3 rounded-lg ${chatBg} border-2 ${borderClass} shadow-lg z-50`}>
-                  <p className={`text-xs ${textClass} opacity-90`}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                  <div className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-2 h-2 rotate-45 ${chatBg} border-l border-t ${borderClass}`} />
-                </div>
-              )}
-            </div>
-          </div>
+      <div className={`flex items-center justify-between border-b-2 ${borderClass} px-4 md:px-6 py-3 md:py-4 shrink-0 ${textClass}`}>
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex items-center gap-2 text-xs md:text-sm font-sans uppercase tracking-[0.18em] opacity-80 hover:opacity-100 transition-opacity"
+          >
+            <span aria-hidden>←</span>
+            <span>Back</span>
+          </button>
 
           <div className="flex items-center gap-3">
-            {/* Refresh icon (optional, can be functional later) */}
+            {/* Refresh icon */}
             <button
               type="button"
               onClick={() => {
@@ -233,29 +221,16 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
                 <path d="M3 21v-5h5" />
               </svg>
             </button>
-            
-            {/* Close button */}
-            <button
-              type="button"
-              onClick={onClose}
-              className={`opacity-60 hover:opacity-100 transition-opacity ${textClass}`}
-              aria-label="Close chat"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
           </div>
       </div>
 
       {/* Content Area - lots of top padding so content sits lower like reference */}
       <div className={`flex flex-col flex-1 min-h-0 ${textClass}`}>
-        <div className="flex-1 overflow-y-auto px-6 pt-16 pb-6 min-h-0">
+        <div className="flex-1 overflow-y-auto px-4 md:px-6 pt-8 md:pt-16 pb-4 md:pb-6 min-h-0">
             {messages.length === 0 ? (
               <div className="space-y-5 pt-6">
                 {/* Greeting */}
-                <p className={`text-lg font-medium ${textClass}`}>hey! what’s up?</p>
+                <p className={`text-base md:text-lg font-medium ${textClass}`}>hey! what’s up?</p>
                 {/* Suggestions with ↳ arrow, lighter grey text */}
                 <div className="space-y-2">
                   {suggestedQuestions.map((question, idx) => (
@@ -263,7 +238,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
                       key={idx}
                       type="button"
                       onClick={() => handleSuggestedClick(question)}
-                      className={`w-full text-left flex items-center gap-2 py-2 text-sm opacity-70 hover:opacity-100 transition-opacity ${textClass}`}
+                      className={`w-full text-left flex items-center gap-2 py-1.5 md:py-2 text-sm opacity-70 hover:opacity-100 transition-opacity ${textClass}`}
                     >
                       <span className="text-base" aria-hidden>↳</span>
                       <span>{question}</span>
@@ -319,7 +294,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
         </div>
 
         {/* Input Bar - button stretches to match textarea height */}
-        <div className={`border-t-2 ${borderClass} px-6 py-4 shrink-0`}>
+        <div className={`border-t-2 ${borderClass} px-4 md:px-6 py-3 md:py-4 shrink-0`}>
             <div className="flex items-stretch gap-2">
               <textarea
                 ref={inputRef}

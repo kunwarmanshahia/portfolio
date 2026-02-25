@@ -21,7 +21,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const to = slugFromStudy(study);
   const content = (
     <>
-      <div className="aspect-video mb-4 overflow-hidden bg-black grayscale hover:grayscale-0 transition-all duration-500 relative rounded-none ring-0 hover:ring-2 hover:ring-orange-500">
+      <div className="aspect-video mb-4 overflow-hidden bg-black md:grayscale md:hover:grayscale-0 transition-all duration-500 relative rounded-none ring-0 md:hover:ring-2 md:hover:ring-orange-500">
         <img 
           src={study.image} 
           alt={study.title} 

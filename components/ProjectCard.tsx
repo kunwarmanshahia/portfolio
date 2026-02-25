@@ -11,7 +11,7 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, isLarge }) => {
   const content = (
     <>
-      <div className={`${isLarge ? 'aspect-[21/9]' : 'aspect-video'} mb-4 overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 bg-brand-dark/5 dark:bg-brand-light/5 relative ring-0 hover:ring-2 hover:ring-orange-500`}>
+      <div className={`${isLarge ? 'aspect-[21/9]' : 'aspect-video'} mb-4 overflow-hidden md:grayscale md:hover:grayscale-0 transition-all duration-700 bg-brand-dark/5 dark:bg-brand-light/5 relative ring-0 md:hover:ring-2 md:hover:ring-orange-500`}>
         <img 
           src={project.image} 
           alt={project.title} 
