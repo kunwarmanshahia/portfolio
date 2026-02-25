@@ -1,37 +1,108 @@
-import React from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Logo } from './Logo';
 import { Theme } from '../types';
+
+const LOGO_JOYSTICK_MAX = 10;
 
 interface HeaderProps { 
   theme: Theme; 
   onToggleTheme: () => void;
   chatOpen: boolean;
   onToggleChat: () => void;
+  hideOnMobile: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggleChat }) => {
+const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggleChat, hideOnMobile }) => {
   const location = useLocation();
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const [logoOffset, setLogoOffset] = useState({ x: 0, y: 0 });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const onLogoMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = logoRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    const clamp = (v: number) => Math.max(-1, Math.min(1, v));
+    setLogoOffset({
+      x: clamp(dx) * LOGO_JOYSTICK_MAX,
+      y: clamp(dy) * LOGO_JOYSTICK_MAX,
+    });
+  }, []);
+
+  const onLogoMouseLeave = useCallback(() => {
+    setLogoOffset({ x: 0, y: 0 });
+  }, []);
 
   const navLinks = [
-    { name: 'Resume', path: '/KunwarManshahia_Resume.pdf', external: true },
+    { name: 'Resume', path: '/KUNWARMANSHAHIARESUME.PDF', external: true },
   ];
 
   const isDark = theme === 'dark';
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-brand-light/70 dark:bg-brand-dark/70 header-border px-4 py-4 md:px-8 lg:px-12 backdrop-blur-md transition-colors duration-300">
-      <div className="max-w-[1920px] mx-auto flex justify-between items-center w-full">
-        {/* Name / Home */}
-        <Link
-          to="/"
-          className="flex items-center transition-colors text-brand-dark dark:text-brand-light font-sans font-normal text-xl md:text-2xl tracking-tight hover:text-orange-500 dark:hover:text-orange-400"
-          aria-label="Kunwar Manshahia – Home"
-        >
-          Kunwar Manshahia
-        </Link>
+  const headerVisibilityClass = hideOnMobile ? '-translate-y-full md:translate-y-0' : 'translate-y-0';
 
-        {/* Nav: Resume, About, Ask My AI */}
-        <nav className="flex items-center space-x-6 md:space-x-12 font-sans text-sm md:text-base font-medium">
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 bg-brand-light/70 dark:bg-brand-dark/70 header-border px-4 py-4 md:px-8 lg:px-12 backdrop-blur-md transition-colors duration-300 transform transition-transform ${headerVisibilityClass}`}>
+      <div className="max-w-[1920px] mx-auto w-full">
+        <div className="flex items-center justify-between w-full relative">
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            className="md:hidden flex items-center text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileMenuOpen(prev => !prev)}
+          >
+            <span className="sr-only">Menu</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {mobileMenuOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </>
+              )}
+            </svg>
+          </button>
+
+          {/* Logo – joystick follow on hover; centered on mobile, left on desktop */}
+          <Link
+            ref={logoRef}
+            to="/"
+            className="flex items-center transition-colors text-brand-dark dark:text-brand-light hover:text-orange-500 dark:hover:text-orange-400 py-1 pr-2 absolute left-1/2 -translate-x-1/2 md:static md:transform-none"
+            aria-label="Kunwar Manshahia – Home"
+            onMouseMove={onLogoMouseMove}
+            onMouseLeave={onLogoMouseLeave}
+          >
+            <span
+              className="inline-block transition-transform duration-150 ease-out"
+              style={{ transform: `translate(${logoOffset.x}px, ${logoOffset.y}px)` }}
+            >
+              <Logo className="h-10 md:h-12 w-auto shrink-0 scale-105 scale-x-[1.02] text-current" />
+            </span>
+          </Link>
+
+          {/* Desktop nav: Resume, Ask My AI, Dark toggle */}
+          <nav className="hidden md:flex items-center space-x-6 md:space-x-12 font-sans text-sm md:text-base font-medium">
           {navLinks.map((link) => (
             link.external ? (
               <a
@@ -94,6 +165,31 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             />
           </label>
         </nav>
+        </div>
+
+        {/* Mobile menu drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-3 border-t border-brand-dark/10 dark:border-brand-light/10 pt-3 space-y-2 text-xs font-sans text-brand-dark dark:text-brand-light">
+            <a
+              href="/KUNWARMANSHAHIARESUME.PDF"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block underline underline-offset-4 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              resume
+            </a>
+            <button
+              type="button"
+              onClick={() => {
+                onToggleTheme();
+              }}
+              className="block w-full text-left underline underline-offset-4 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            >
+              {isDark ? 'light mode' : 'dark mode'}
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

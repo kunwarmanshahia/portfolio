@@ -2,7 +2,7 @@ import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { chatWithGemini } from './lib/gemini.js';
+import { chatWithGemini, isInappropriate, INAPPROPRIATE_RESPONSE } from './lib/gemini.js';
 import { buildPortfolioContext } from './lib/portfolioContext.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -70,6 +70,15 @@ const server = http.createServer(async (req, res) => {
       console.error('API key not set!');
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'GEMINI_API_KEY not set. Add it to .env in the project root.' }));
+      return;
+    }
+
+    const lastUser = Array.isArray(messages) ? [...messages].reverse().find((m) => m && m.role === 'user') : null;
+    const lastText = lastUser && (lastUser.content != null ? lastUser.content : lastUser.text);
+    if (lastText != null && lastText !== '' && isInappropriate(lastText)) {
+      console.log('[server] inappropriate message detected, not replying');
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ content: INAPPROPRIATE_RESPONSE }));
       return;
     }
 

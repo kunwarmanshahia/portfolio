@@ -20,14 +20,13 @@ const Triunity: React.FC = () => {
         </h1>
       </header>
 
-      {/* Logo 1 + Logo 2 side by side */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
-        <div className="bg-black overflow-hidden">
-          <img src="/images/triunity-1.png" alt="Triunity Martial Arts – Logo 1" className="w-full h-full object-contain" />
-        </div>
-        <div className="bg-black overflow-hidden">
-          <img src="/images/triunity-2.png" alt="Triunity Martial Arts – Logo 2" className="w-full h-full object-contain" />
-        </div>
+      {/* Triunity 1 on top (slight zoom to remove side margins) */}
+      <div className="aspect-video bg-black overflow-hidden mb-12 md:mb-16">
+        <img
+          src="/images/triunity-1.png"
+          alt="Triunity Martial Arts – Logo 1"
+          className="w-full h-full object-cover scale-105"
+        />
       </div>
 
       {/* Context */}
@@ -42,14 +41,23 @@ const Triunity: React.FC = () => {
         </div>
       </section>
 
-      {/* Logo 3 */}
-      <div className="bg-black overflow-hidden mb-4 md:mb-6">
-        <img src="/images/triunity-3.png" alt="Triunity Martial Arts – Logo 3" className="w-full h-full object-contain" />
+      {/* Triunity 2 + 3 */} 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="bg-black overflow-hidden">
+          <img src="/images/triunity-2.png" alt="Triunity Martial Arts – Logo 2" className="w-full h-full object-contain" />
+        </div>
+        <div className="bg-black overflow-hidden">
+          <img src="/images/triunity-3.png" alt="Triunity Martial Arts – Logo 3" className="w-full h-full object-contain" />
+        </div>
       </div>
 
-      {/* Logo 4 */}
-      <div className="bg-black overflow-hidden">
-        <img src="/images/triunity-4.png" alt="Triunity Martial Arts – Logo 4" className="w-full h-full object-contain" />
+      {/* Dragon image */} 
+      <div className="w-fit mx-auto flex items-center justify-center">
+        <img
+          src="/images/triunity-4.png"
+          alt="Triunity Martial Arts – Dragon"
+          className="w-auto max-w-full h-auto object-contain max-h-[70vh] md:max-h-[640px] block"
+        />
       </div>
     </div>
   );

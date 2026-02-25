@@ -21,15 +21,15 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const to = slugFromStudy(study);
   const content = (
     <>
-      <div className="aspect-video mb-4 overflow-hidden bg-black transition-all duration-500 relative rounded-none">
+      <div className="aspect-video mb-4 overflow-hidden bg-black grayscale hover:grayscale-0 transition-all duration-500 relative rounded-none ring-0 hover:ring-2 hover:ring-orange-500">
         <img 
           src={study.image} 
           alt={study.title} 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gray-400/30 dark:bg-[#eff8e2]/30 transition-opacity duration-500 group-hover:opacity-0" />
+        <div className="absolute inset-0 bg-orange-400/10 transition-opacity duration-500 group-hover:opacity-0" />
       </div>
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 items-start tracking-tight">
+      <div className="flex justify-between items-baseline tracking-tight gap-x-3">
         <span className="font-sans font-normal text-sm md:text-base text-brand-dark dark:text-brand-light group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors min-w-0 break-words leading-snug">
           {study.title}
         </span>

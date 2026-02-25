@@ -1,4 +1,4 @@
-import { chatWithGemini } from '../../lib/gemini.js';
+import { chatWithGemini, isInappropriate, INAPPROPRIATE_RESPONSE } from '../../lib/gemini.js';
 import { buildPortfolioContext } from '../../lib/portfolioContext.js';
 
 const headers = {
@@ -40,6 +40,16 @@ export async function handler(event) {
       body: JSON.stringify({
         error: 'GEMINI_API_KEY not set. Add it in Netlify site settings → Environment variables.',
       }),
+    };
+  }
+
+  const lastUser = Array.isArray(messages) ? [...messages].reverse().find((m) => m && m.role === 'user') : null;
+  const lastText = lastUser && (lastUser.content != null ? lastUser.content : lastUser.text);
+  if (lastText != null && lastText !== '' && isInappropriate(lastText)) {
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ content: INAPPROPRIATE_RESPONSE }),
     };
   }
 

@@ -21,11 +21,11 @@ const LaHaine: React.FC = () => {
       </header>
 
       {/* Cover image */}
-      <div className="bg-black overflow-hidden mb-8 md:mb-12">
+      <div className="aspect-video overflow-hidden mb-8 md:mb-12 max-w-[95%] mx-auto">
         <img
           src="/images/lahaine-1.png"
           alt="La Haine – Cover"
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover"
         />
       </div>
 
@@ -36,18 +36,18 @@ const LaHaine: React.FC = () => {
             Context
           </div>
           <p className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light leading-relaxed mb-4 mt-8">
-            La Haine is one of my favourite films. For a design class assignment on promotional movie posters, it was the obvious pick — a chance to translate the raw energy of the film into print.
+            La Haine is one of my favourite films. We had to make movie posters for a class assignment; it was the obvious pick. It gave me a chance to translate the energy of the film into design — a skill I excel at.
           </p>
         </div>
       </section>
 
       {/* Remaining images side by side */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <div className="bg-black overflow-hidden">
-          <img src="/images/lahaine-2.png" alt="La Haine – 2" className="w-full h-full object-contain" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-[95%] mx-auto">
+        <div className="overflow-hidden">
+          <img src="/images/lahaine-2.png" alt="La Haine – 2" className="w-full h-full object-cover" />
         </div>
-        <div className="bg-black overflow-hidden">
-          <img src="/images/lahaine-3.png" alt="La Haine – 3" className="w-full h-full object-contain" />
+        <div className="overflow-hidden">
+          <img src="/images/lahaine-3.png" alt="La Haine – 3" className="w-full h-full object-cover" />
         </div>
       </div>
     </div>
