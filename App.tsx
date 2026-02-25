@@ -86,28 +86,6 @@ const App: React.FC = () => {
           hideOnMobile={hideHeaderOnMobile}
         />
         <ChatWidget theme={theme} open={chatOpen} onClose={() => setChatOpen(false)} width={CHAT_WIDTH} />
-        {!chatOpen && (
-          <button
-            type="button"
-            onClick={toggleChat}
-            className="fixed bottom-4 right-4 z-40 md:hidden rounded-full border-2 border-brand-dark/20 dark:border-brand-light/30 bg-brand-light dark:bg-brand-dark text-brand-dark dark:text-brand-light p-3 shadow-lg"
-            aria-label="Open Ask My AI chat"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
-            </svg>
-          </button>
-        )}
         <div
           className="transition-[margin-right] duration-300 ease-out"
           style={{ marginRight: chatOpen ? CHAT_WIDTH : 0 }}
