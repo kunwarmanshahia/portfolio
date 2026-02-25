@@ -22,7 +22,7 @@ const Gearbox: React.FC = () => {
 
       {/* Logo */}
       <div className="bg-black overflow-hidden mb-8 md:mb-12">
-        <img src="/images/gearbox-logo.png" alt="GEARBOX – Logo" className="w-full h-full object-contain" />
+        <img src="/images/gearbox-logo.jpg" alt="GEARBOX – Logo" className="w-full h-full object-contain" />
       </div>
 
       {/* Context */}
@@ -40,28 +40,28 @@ const Gearbox: React.FC = () => {
       {/* Row 1: 1, 2, 3 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
         <div className="bg-black overflow-hidden">
-          <img src="/images/gearbox-1.png" alt="GEARBOX – 1" className="w-full h-full object-contain" />
+          <img src="/images/gearbox-1.jpg" alt="GEARBOX – 1" className="w-full h-full object-contain" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/gearbox-2.png" alt="GEARBOX – 2" className="w-full h-full object-contain" />
+          <img src="/images/gearbox-2.jpg" alt="GEARBOX – 2" className="w-full h-full object-contain" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/gearbox-3.png" alt="GEARBOX – 3" className="w-full h-full object-contain" />
+          <img src="/images/gearbox-3.jpg" alt="GEARBOX – 3" className="w-full h-full object-contain" />
         </div>
       </div>
 
       {/* Row 2: 4 full width */}
       <div className="bg-black overflow-hidden mb-4 md:mb-6">
-        <img src="/images/gearbox-4.png" alt="GEARBOX – Magazine Cover" className="w-full h-full object-contain" />
+        <img src="/images/gearbox-4.jpg" alt="GEARBOX – Magazine Cover" className="w-full h-full object-contain" />
       </div>
 
       {/* Row 3: 5, 6 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="bg-black overflow-hidden">
-          <img src="/images/gearbox-5.png" alt="GEARBOX – 5" className="w-full h-full object-cover" />
+          <img src="/images/gearbox-5.jpg" alt="GEARBOX – 5" className="w-full h-full object-cover" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/gearbox-6.png" alt="GEARBOX – 6" className="w-full h-full object-contain" />
+          <img src="/images/gearbox-6.jpg" alt="GEARBOX – 6" className="w-full h-full object-contain" />
         </div>
       </div>
     </div>

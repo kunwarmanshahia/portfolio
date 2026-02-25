@@ -23,10 +23,10 @@ const CloverXBarbershop: React.FC = () => {
       {/* CXB1 monogram + Tee side by side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
         <div className="bg-black overflow-hidden">
-          <img src="/images/cxb-1.png" alt="Clover X Barbershop – Monogram" className="w-full h-full object-contain" />
+          <img src="/images/cxb-1.jpg" alt="Clover X Barbershop – Monogram" className="w-full h-full object-contain" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/cxb-tee.png" alt="Clover X Barbershop – Tee" className="w-full h-full object-contain" />
+          <img src="/images/cxb-tee.jpg" alt="Clover X Barbershop – Tee" className="w-full h-full object-contain" />
         </div>
       </div>
 
@@ -45,16 +45,16 @@ const CloverXBarbershop: React.FC = () => {
       {/* Remaining images in 2-column grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
         <div className="bg-black overflow-hidden">
-          <img src="/images/cxb-3.png" alt="Clover X Barbershop – Wordmark" className="w-full h-full object-contain" />
+          <img src="/images/cxb-3.jpg" alt="Clover X Barbershop – Wordmark" className="w-full h-full object-contain" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/cxb-2.png" alt="Clover X Barbershop – Logo" className="w-full h-full object-contain" />
+          <img src="/images/cxb-2.jpg" alt="Clover X Barbershop – Logo" className="w-full h-full object-contain" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/cxb-5.png" alt="Clover X Barbershop – 5" className="w-full h-full object-contain" />
+          <img src="/images/cxb-5.jpg" alt="Clover X Barbershop – 5" className="w-full h-full object-contain" />
         </div>
         <div className="bg-black overflow-hidden">
-          <img src="/images/cxb-6.png" alt="Clover X Barbershop – 6" className="w-full h-full object-contain" />
+          <img src="/images/cxb-6.jpg" alt="Clover X Barbershop – 6" className="w-full h-full object-contain" />
         </div>
       </div>
     </div>

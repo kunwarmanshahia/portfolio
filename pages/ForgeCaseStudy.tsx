@@ -38,15 +38,15 @@ const scrollTo = (id: string) => {
 
 /* Final Design carousel: row1 = 6,8,7; row2 = 5,4,3; row3 = unnumbered, 1, 2 */
 const FINAL_DESIGN_SLIDES = [
-  '/images/forge-iphone-6.png',
-  '/images/forge-iphone-8.png',
-  '/images/forge-iphone-7.png',
-  '/images/forge-iphone-5.png',
-  '/images/forge-iphone-4.png',
-  '/images/forge-iphone-3.png',
-  '/images/forge-iphone.png',
-  '/images/forge-iphone-1.png',
-  '/images/forge-iphone-2.png',
+  '/images/forge-iphone-6.jpg',
+  '/images/forge-iphone-8.jpg',
+  '/images/forge-iphone-7.jpg',
+  '/images/forge-iphone-5.jpg',
+  '/images/forge-iphone-4.jpg',
+  '/images/forge-iphone-3.jpg',
+  '/images/forge-iphone.jpg',
+  '/images/forge-iphone-1.jpg',
+  '/images/forge-iphone-2.jpg',
 ];
 
 const SLIDES_PER_PAGE = 3;
@@ -141,7 +141,7 @@ const ForgeCaseStudy: React.FC = () => {
             {/* Hero / cover image */}
             <div className="mt-8 md:mt-10 rounded overflow-hidden relative w-full">
               <img
-                src="/images/covers/forge-cover.png"
+                src="/images/covers/forge-cover.jpg"
                 alt="Forge — Build your future, today. App screens showing career guide and pathways."
                 className="w-full h-auto object-contain block"
               />
@@ -209,7 +209,7 @@ const ForgeCaseStudy: React.FC = () => {
               </p>
               <div className="rounded overflow-hidden mb-6 w-full">
                 <img
-                  src="/images/ForgeOverviewPic1.png"
+                  src="/images/ForgeOverviewPic1.jpg"
                   alt="Forge app overview — career pathway and trades discovery"
                   className="w-full h-auto block"
                 />
@@ -249,7 +249,7 @@ const ForgeCaseStudy: React.FC = () => {
               </p>
               <div className="rounded overflow-hidden mb-6 w-full bg-brand-dark/5 dark:bg-brand-light/5 min-h-[200px]">
                 <img
-                  src="/images/forge-solution.png"
+                  src="/images/forge-solution.jpg"
                   alt="Forge solution — career pathway and trades discovery"
                   className="w-full h-auto block object-contain"
                 />
@@ -274,14 +274,14 @@ const ForgeCaseStudy: React.FC = () => {
             </h2>
             <div className="rounded overflow-hidden mb-6 w-full bg-brand-dark/5 dark:bg-brand-light/5 min-h-[200px]">
               <img
-                src="/images/ForgeSurvey1.png"
+                src="/images/ForgeSurvey1.jpg"
                 alt="Forge survey insights — chart and key findings"
                 className="w-full h-auto block object-contain"
               />
             </div>
             <div className="rounded overflow-hidden mb-6 w-full bg-brand-dark/5 dark:bg-brand-light/5 min-h-[200px]">
               <img
-                src="/images/ForgeSurvey2.png"
+                src="/images/ForgeSurvey2.jpg"
                 alt="Forge survey insights — additional responses and themes"
                 className="w-full h-auto block object-contain"
               />
@@ -305,7 +305,7 @@ const ForgeCaseStudy: React.FC = () => {
             </h2>
             <div className="rounded overflow-hidden mb-6 w-full">
               <img
-                src="/images/CoreFlows.png"
+                src="/images/CoreFlows.jpg"
                 alt="Forge core flows — Interactive Simulation, Explore In-Demand Trades, Career Breakdown"
                 className="w-full h-auto block"
               />

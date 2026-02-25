@@ -23,7 +23,7 @@ const BrokenYolk: React.FC = () => {
       {/* Logo on top */}
       <div className="overflow-hidden mb-8 md:mb-12 max-w-[95%] mx-auto">
         <img
-          src="/images/brokenyolk-logo.png"
+          src="/images/brokenyolk-logo.jpg"
           alt="The Broken Yolk – Logo"
           className="w-full h-auto object-contain"
         />
@@ -44,20 +44,20 @@ const BrokenYolk: React.FC = () => {
       {/* Row 1: 1, 2 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-[95%] mx-auto mb-4 md:mb-6">
         <div className="overflow-hidden">
-          <img src="/images/brokenyolk-1.png" alt="The Broken Yolk – 1" className="w-full h-full object-cover" />
+          <img src="/images/brokenyolk-1.jpg" alt="The Broken Yolk – 1" className="w-full h-full object-cover" />
         </div>
         <div className="overflow-hidden">
-          <img src="/images/brokenyolk-2.png" alt="The Broken Yolk – 2" className="w-full h-full object-cover" />
+          <img src="/images/brokenyolk-2.jpg" alt="The Broken Yolk – 2" className="w-full h-full object-cover" />
         </div>
       </div>
 
       {/* Row 2: 3, 4 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-[95%] mx-auto mb-4 md:mb-6">
         <div className="overflow-hidden">
-          <img src="/images/brokenyolk-3.png" alt="The Broken Yolk – 3" className="w-full h-full object-cover" />
+          <img src="/images/brokenyolk-3.jpg" alt="The Broken Yolk – 3" className="w-full h-full object-cover" />
         </div>
         <div className="overflow-hidden">
-          <img src="/images/brokenyolk-4.png" alt="The Broken Yolk – 4" className="w-full h-full object-cover" />
+          <img src="/images/brokenyolk-4.jpg" alt="The Broken Yolk – 4" className="w-full h-full object-cover" />
         </div>
       </div>
 

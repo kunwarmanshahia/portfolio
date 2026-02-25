@@ -23,10 +23,10 @@ const SignaturesForSound: React.FC = () => {
       {/* 1 and 2 on top */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
         <div className="overflow-hidden">
-          <img src="/images/sfs-1.png?v=3" alt="Signatures for Sound – 1" className="w-full h-full object-cover" />
+          <img src="/images/sfs-1.jpg?v=3" alt="Signatures for Sound – 1" className="w-full h-full object-cover" />
         </div>
         <div className="overflow-hidden">
-          <img src="/images/sfs-2.png" alt="Signatures for Sound – 2" className="w-full h-full object-cover" />
+          <img src="/images/sfs-2.jpg" alt="Signatures for Sound – 2" className="w-full h-full object-cover" />
         </div>
       </div>
 
@@ -45,10 +45,10 @@ const SignaturesForSound: React.FC = () => {
       {/* 3 and 4 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="overflow-hidden">
-          <img src="/images/sfs-3.png" alt="Signatures for Sound – 3" className="w-full h-full object-cover" />
+          <img src="/images/sfs-3.jpg" alt="Signatures for Sound – 3" className="w-full h-full object-cover" />
         </div>
         <div className="overflow-hidden">
-          <img src="/images/sfs-4.png" alt="Signatures for Sound – 4" className="w-full h-full object-cover" />
+          <img src="/images/sfs-4.jpg" alt="Signatures for Sound – 4" className="w-full h-full object-cover" />
         </div>
       </div>
     </div>

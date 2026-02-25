@@ -7,6 +7,7 @@
     "dev": "vite",
     "server": "node server.js",
     "dev:all": "concurrently \"npm run server\" \"vite\"",
+    "convert:images": "node scripts/convert-images.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -18,6 +19,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.0",
+    "sharp": "^0.34.5",
     "three": "^0.182.0"
   },
   "devDependencies": {

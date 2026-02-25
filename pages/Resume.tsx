@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import resumeImg from '../KunwarManshahiaResume.jpg';
+import resumePdf from '../KunwarManshahiaResume.pdf';
 
 const Resume: React.FC = () => {
   return (
@@ -23,7 +25,7 @@ const Resume: React.FC = () => {
       <section className="space-y-6">
         <div className="w-full max-w-3xl rounded border border-brand-dark/10 dark:border-brand-light/15 overflow-hidden bg-brand-light/10 dark:bg-brand-dark/40">
           <img
-            src="/KunwarManshahiaResume.png"
+            src={resumeImg}
             alt="Kunwar Manshahia — Resume"
             className="w-full h-auto block"
           />
@@ -35,7 +37,7 @@ const Resume: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3">
             <a
-              href="/KUNWARMANSHAHIARESUME.PDF"
+              href={resumePdf}
               download
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-brand-dark/40 dark:border-brand-light/40 font-mono text-xs md:text-sm uppercase tracking-[0.18em] text-brand-dark dark:text-brand-light bg-transparent md:hover:bg-orange-500 md:hover:text-white md:dark:hover:bg-orange-500 md:dark:hover:text-white transition-colors"
             >

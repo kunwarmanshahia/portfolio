@@ -18,7 +18,7 @@ const scrollTo = (id: string) => {
 };
 
 const SLIDES_PER_PAGE = 3;
-const MOSAIC_FINAL_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/images/mosaic-${n}.png`);
+const MOSAIC_FINAL_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/images/mosaic-${n}.jpg`);
 const MosaicFinalDesignCarousel: React.FC = () => {
   const totalPages = Math.ceil(MOSAIC_FINAL_SLIDES.length / SLIDES_PER_PAGE);
   const [page, setPage] = useState(0);
@@ -103,7 +103,7 @@ const MosaicCaseStudy: React.FC = () => {
             </h1>
             <div className="mt-8 md:mt-10 rounded overflow-hidden relative w-full">
               <img
-                src="/images/covers/mosaic-cover.png?v=2"
+                src="/images/covers/mosaic-cover.jpg?v=2"
                 alt="Mosaic — Create projects and customize your portfolio. App screens showing project creation and profile."
                 className="w-full h-auto object-contain block"
               />
@@ -170,7 +170,7 @@ const MosaicCaseStudy: React.FC = () => {
                 The platform generates customizable project prompts based on user skills, allowing users to practice, complete, and track portfolio-ready work in one place.
               </p>
               <div className="rounded overflow-hidden mb-6 w-full">
-                <img src="/images/mosaic-problems.png" alt="Mosaic — overview and problem space" className="w-full h-auto block" />
+                <img src="/images/mosaic-problems.jpg" alt="Mosaic — overview and problem space" className="w-full h-auto block" />
               </div>
 
               <h2 className="font-sans font-normal text-xl md:text-2xl tracking-tight text-brand-dark dark:text-brand-light mb-[1.2rem] mt-8">
@@ -206,7 +206,7 @@ const MosaicCaseStudy: React.FC = () => {
                 Mosaic provides users with AI-generated, customizable project scenarios that simulate real clients. Users can create projects, complete defined tasks, and add finished work directly to their portfolio.
               </p>
               <div className="rounded overflow-hidden mb-6 w-full">
-                <img src="/images/mosaic-solution.png" alt="Mosaic — solution overview" className="w-full h-auto block" />
+                <img src="/images/mosaic-solution.jpg" alt="Mosaic — solution overview" className="w-full h-auto block" />
               </div>
               <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">
                 What Mosaic includes:
@@ -227,7 +227,7 @@ const MosaicCaseStudy: React.FC = () => {
               Early-stage creatives want guidance, not open-ended prompts.
             </h2>
             <div className="rounded overflow-hidden mb-6 w-full">
-              <img src="/images/mosaic-userpersonas.png" alt="Mosaic — user personas and research" className="w-full h-auto block" />
+              <img src="/images/mosaic-userpersonas.jpg" alt="Mosaic — user personas and research" className="w-full h-auto block" />
             </div>
             <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2 mt-6">
               Through my research, I realized:
@@ -253,19 +253,19 @@ const MosaicCaseStudy: React.FC = () => {
               {[
                 {
                   label: 'Accessibility',
-                  img: '/images/mosaic-coreflows1.png',
+                  img: '/images/mosaic-coreflows1.jpg',
                   title: 'Light mode, dark mode, and colourblind mode',
                   desc: 'Accessibility was a core priority from the start. We designed three display modes — including a dedicated colourblind mode — so every user can interact with Mosaic comfortably.',
                 },
                 {
                   label: 'Onboarding',
-                  img: '/images/mosaic-coreflows2.png',
+                  img: '/images/mosaic-coreflows2.jpg',
                   title: 'Email-based onboarding with a verification code',
                   desc: 'Users sign up by entering their email and receiving a one-time code — no passwords, no friction. Quick to start, easy to trust.',
                 },
                 {
                   label: 'Project creation',
-                  img: '/images/mosaic-coreflows3.png',
+                  img: '/images/mosaic-coreflows3.jpg',
                   title: 'Project ideation as a simple questionnaire',
                   desc: 'Instead of a blank prompt, users answer a short set of questions. Mosaic uses their answers to generate a tailored project brief — structured, relevant, and ready to start.',
                 },
@@ -297,18 +297,18 @@ const MosaicCaseStudy: React.FC = () => {
             </p>
             <div className="flex flex-col gap-8 w-full max-w-full">
               <div>
-                <div className="rounded overflow-hidden w-full mb-4">
-                  <img src="/images/mosaic-graphicdesign1.png" alt="Mosaic — Gems user avatars" className="w-full h-auto max-w-full object-contain" />
-                </div>
+                  <div className="rounded overflow-hidden w-full mb-4">
+                    <img src="/images/mosaic-graphicdesign1.jpg" alt="Mosaic — Gems user avatars" className="w-full h-auto max-w-full object-contain" />
+                  </div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">These are called "Gems"</h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
                   I created user avatars called "Gems" (yes, I did it before Google — just without the AI). They appear during profile creation and give each user a distinct, personal identity within the app while staying true to brand colours.
                 </p>
               </div>
               <div>
-                <div className="rounded overflow-hidden w-full mb-4">
-                  <img src="/images/mosaic-graphicdesign2.png" alt="Mosaic — onboarding and project creation graphics" className="w-full h-auto max-w-full object-contain" />
-                </div>
+                  <div className="rounded overflow-hidden w-full mb-4">
+                    <img src="/images/mosaic-graphicdesign2.jpg" alt="Mosaic — onboarding and project creation graphics" className="w-full h-auto max-w-full object-contain" />
+                  </div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">Simplicity is the best</h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
                   I created simple graphics for the onboarding and project creation modules. I believe in taking away rather than adding — simplicity isn't just aesthetic, it helps people learn better.

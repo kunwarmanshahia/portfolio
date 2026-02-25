@@ -7,14 +7,14 @@ const Home: React.FC = () => {
       id: 'sw1',
       title: 'Clover X Barbershop',
       description: 'Client Branding · 2025',
-      image: '/images/cxb-1.png',
+      image: '/images/cxb-1.jpg',
       link: '/project/clover-x-barbershop',
     },
     {
       id: 'sw2',
       title: 'La Haine',
       description: 'Print Design · 2025',
-      image: '/images/lahaine-1.png',
+      image: '/images/lahaine-1.jpg',
       link: '/project/la-haine',
     },
   ];
@@ -25,24 +25,24 @@ const Home: React.FC = () => {
       title: "Our response to BC's 60,000 skilled tradesperson gap.",
       appName: 'Forge',
       category: 'UX/UI',
-      image: '/images/covers/forge-cover.png',
+      image: '/images/covers/forge-cover.jpg',
     },
     {
       id: '2',
       title: "New to design? Here's how you can build a portfolio piece within a week.",
       appName: 'Mosaic',
       category: 'UX/UI',
-      image: '/images/covers/mosaic-cover.png?v=2',
+      image: '/images/covers/mosaic-cover.jpg?v=2',
     },
   ];
 
   const summaryProjects = [
-    { id: 'p1', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.png', link: '/project/triunity', objectFit: 'contain' },
-    { id: 'p2', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.png?v=2', link: '/project/signatures-for-sound' },
-    { id: 'p3', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.png', link: '/project/broken-yolk', objectFit: 'cover' },
-    { id: 'p4', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.png', link: '/project/gearbox', objectFit: 'cover' },
-    { id: 'p5', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.png', link: '/project/clover-x-barbershop' },
-    { id: 'p6', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.png', link: '/project/la-haine' },
+    { id: 'p1', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.jpg', link: '/project/triunity', objectFit: 'contain' },
+    { id: 'p2', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.jpg?v=2', link: '/project/signatures-for-sound' },
+    { id: 'p3', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.jpg', link: '/project/broken-yolk', objectFit: 'cover' },
+    { id: 'p4', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.jpg', link: '/project/gearbox', objectFit: 'cover' },
+    { id: 'p5', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.jpg', link: '/project/clover-x-barbershop' },
+    { id: 'p6', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.jpg', link: '/project/la-haine' },
   ];
 
   return (
