@@ -37,7 +37,7 @@ const Cursor: React.FC<CursorProps> = ({ theme }) => {
 
   if (cursor === null) return null;
 
-  const fillColor = '#ff8811';
+  const fillColor = theme === 'dark' ? '#98CE00' : '#FF4E00';
 
   return (
     <div
@@ -47,8 +47,8 @@ const Cursor: React.FC<CursorProps> = ({ theme }) => {
         top: cursor.y,
         transform: 'translate(-50%, -50%)',
         color: fillColor,
-        width: cursor.overClickable ? 36 : 14,
-        height: cursor.overClickable ? 36 : 14,
+        width: cursor.overClickable ? 48 : 18,
+        height: cursor.overClickable ? 48 : 18,
       }}
       aria-hidden
     >

@@ -21,18 +21,18 @@ const Home: React.FC = () => {
 
   const caseStudies = [
     {
-      id: '1',
-      title: "Our response to BC's 60,000 skilled tradesperson gap.",
-      appName: 'Forge',
-      category: 'UX/UI',
-      image: '/images/covers/forge-cover.jpg',
-    },
-    {
       id: '2',
       title: "New to design? Here's how you can build a portfolio piece within a week.",
       appName: 'Mosaic',
       category: 'UX/UI',
       image: '/images/covers/mosaic-cover.jpg?v=2',
+    },
+    {
+      id: '1',
+      title: "Our response to BC's 60,000 skilled tradesperson gap.",
+      appName: 'Forge',
+      category: 'UX/UI',
+      image: '/images/covers/forge-cover.jpg',
     },
   ];
 
@@ -47,23 +47,9 @@ const Home: React.FC = () => {
 
   return (
     <div className="px-4 md:px-8 lg:px-12 pt-4 md:pt-6 pb-8 md:pb-16 max-w-[1920px] mx-auto w-full space-y-10 md:space-y-14 [&>*:nth-child(2)]:!mt-10 md:[&>*:nth-child(2)]:!mt-14 [&>*:nth-child(3)]:!mt-10 md:[&>*:nth-child(3)]:!mt-14">
-      {/* Select Work heading */}
-      <section className="space-y-4">
-        <div className="pt-4">
-          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            Select Work.
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
-          {selectWorkProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </section>
-
       {/* Case Studies Section */}
       <section id="case-studies" className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
+        <div className="pt-4">
           <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
             Case Studies.
           </h2>
@@ -71,6 +57,20 @@ const Home: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
           {caseStudies.map((study) => (
             <CaseStudyCard key={study.id} study={study} />
+          ))}
+        </div>
+      </section>
+
+      {/* Select Work heading */}
+      <section className="space-y-4">
+        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
+          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
+            Select Work.
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
+          {selectWorkProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </section>

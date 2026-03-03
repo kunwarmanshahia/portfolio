@@ -11,14 +11,13 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, isLarge }) => {
   const content = (
     <>
-      <div className={`${isLarge ? 'aspect-[21/9]' : 'aspect-video'} mb-4 overflow-hidden md:grayscale md:hover:grayscale-0 transition-all duration-700 bg-brand-dark/5 dark:bg-brand-light/5 relative ring-0 md:hover:ring-2 md:hover:ring-orange-500`}>
+      <div className={`${isLarge ? 'aspect-[21/9]' : 'aspect-video'} mb-4 overflow-hidden bg-brand-dark/5 dark:bg-brand-light/5 relative ring-0 md:hover:ring-2 md:hover:ring-orange-500 transition-all duration-300`}>
         <img 
           src={project.image} 
           alt={project.title} 
           className={`w-full h-full ${project.objectFit === 'contain' ? 'object-cover scale-105' : 'object-cover'}`}
           style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
         />
-        <div className="absolute inset-0 bg-orange-400/10 transition-opacity duration-700 group-hover:opacity-0 hidden md:block" />
       </div>
       
       <div className="flex justify-between items-baseline tracking-tight">
