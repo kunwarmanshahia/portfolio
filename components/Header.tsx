@@ -40,6 +40,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
   }, []);
 
   const navLinks = [
+    { name: 'Projects', path: '/work#projects', external: false },
     { name: 'Resume', path: '/resume', external: false },
   ];
 
@@ -88,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
           {/* Logo – joystick follow on hover; centered on mobile, left on desktop */}
           <Link
             ref={logoRef}
-            to="/"
+            to="/work"
             className="flex items-center transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 py-1 pr-2 absolute left-1/2 -translate-x-1/2 md:static md:transform-none"
             aria-label="Kunwar Manshahia – Home"
             onMouseMove={onLogoMouseMove}
@@ -102,52 +103,52 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
             </span>
           </Link>
 
-          {/* Desktop nav: Resume, Ask My AI, Dark toggle */}
-          <nav className="hidden md:flex items-center space-x-6 md:space-x-12 font-sans text-sm md:text-base font-medium">
-          {navLinks.map((link) => (
-            link.external ? (
-              <a
-                key={link.name}
-                href={link.path}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400"
-              >
-                {link.name}
-              </a>
-            ) : (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`${location.pathname === link.path ? 'underline underline-offset-4' : ''} transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400`}
-              >
-                {link.name}
-              </Link>
-            )
-          ))}
-
-          {/* Ask My AI Button */}
-          <button
-            onClick={onToggleChat}
-            aria-label={chatOpen ? 'Close Ask My AI chat' : 'Open Ask My AI chat'}
-            className="group/kai flex items-center gap-1.5 font-sans font-medium text-sm md:text-base text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={`transition-colors duration-300 group-hover/kai:stroke-orange-500 ${chatOpen ? 'stroke-orange-500' : 'stroke-brand-dark dark:stroke-brand-light opacity-50'}`}
+          {/* Desktop nav: Ask My AI, Resume, Projects, Dark toggle */}
+          <nav className="hidden md:flex items-center space-x-6 md:space-x-10 font-sans text-sm md:text-base font-medium">
+            {/* Ask My AI Button (first) */}
+            <button
+              onClick={onToggleChat}
+              aria-label={chatOpen ? 'Close Ask My AI chat' : 'Open Ask My AI chat'}
+              className="group/kai flex items-center gap-1.5 font-sans font-medium text-sm md:text-base text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors focus:outline-none"
             >
-              <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
-            </svg>
-            <span>Ask My AI</span>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`transition-colors duration-300 group-hover/kai:stroke-orange-500 ${chatOpen ? 'stroke-orange-500' : 'stroke-brand-dark dark:stroke-brand-light opacity-50'}`}
+              >
+                <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
+              </svg>
+              <span>Ask My AI</span>
+            </button>
+
+            {navLinks.map((link) => (
+              link.external ? (
+                <a
+                  key={link.name}
+                  href={link.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`${location.pathname === link.path ? 'underline underline-offset-4' : ''} transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400`}
+                >
+                  {link.name}
+                </Link>
+              )
+            ))}
 
           {/* Dark mode toggle – pill + knob, portfolio colours */}
           <label htmlFor="dark-mode" className="relative inline-flex items-center cursor-pointer">
@@ -171,12 +172,29 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-3 border-t border-brand-dark/10 dark:border-brand-light/10 pt-3 space-y-3 text-sm font-sans text-brand-dark dark:text-brand-light">
+            <button
+              type="button"
+              onClick={() => {
+                onToggleChat();
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
+            >
+              ask my ai
+            </button>
             <Link
               to="/resume"
               className="block underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               resume
+            </Link>
+            <Link
+              to="/work#projects"
+              className="block underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              projects
             </Link>
             <button
               type="button"

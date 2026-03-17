@@ -12,10 +12,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isLarge }) => {
   const content = (
     <>
       <div className={`${isLarge ? 'aspect-[21/9]' : 'aspect-video'} mb-4 overflow-hidden bg-brand-dark/5 dark:bg-brand-light/5 relative ring-0 md:hover:ring-2 md:hover:ring-orange-500 transition-all duration-300`}>
-        <img 
-          src={project.image} 
-          alt={project.title} 
-          className={`w-full h-full ${project.objectFit === 'contain' ? 'object-cover scale-105' : 'object-cover'}`}
+        <img
+          src={project.image}
+          alt={project.title}
+          className={`w-full h-full ${
+            project.objectFit === 'contain'
+              ? 'object-contain'
+              : `object-cover${project.title === 'Triunity Martial Arts' ? ' scale-[1.08]' : ''}`
+          }`}
           style={project.objectPosition ? { objectPosition: project.objectPosition } : undefined}
         />
       </div>

@@ -12,10 +12,10 @@ const Home: React.FC = () => {
     },
     {
       id: 'sw2',
-      title: 'La Haine',
-      description: 'Print Design · 2025',
-      image: '/images/lahaine-1.jpg',
-      link: '/project/la-haine',
+      title: 'Triunity Martial Arts',
+      description: 'Client Branding · 2025',
+      image: '/images/triunity-1.jpg',
+      link: '/project/triunity',
     },
   ];
 
@@ -27,45 +27,25 @@ const Home: React.FC = () => {
       category: 'UX/UI',
       image: '/images/covers/mosaic-cover.jpg?v=2',
     },
-    {
-      id: '1',
-      title: "Our response to BC's 60,000 skilled tradesperson gap.",
-      appName: 'Forge',
-      category: 'UX/UI',
-      image: '/images/covers/forge-cover.jpg',
-    },
   ];
 
   const summaryProjects = [
-    { id: 'p1', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.jpg', link: '/project/triunity', objectFit: 'contain' },
-    { id: 'p2', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.jpg?v=2', link: '/project/signatures-for-sound' },
-    { id: 'p3', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.jpg', link: '/project/broken-yolk', objectFit: 'cover' },
-    { id: 'p4', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.jpg', link: '/project/gearbox', objectFit: 'cover' },
-    { id: 'p5', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.jpg', link: '/project/clover-x-barbershop' },
-    { id: 'p6', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.jpg', link: '/project/la-haine' },
+    { id: 'p1', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.jpg', link: '/project/la-haine' },
+    { id: 'p2', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.jpg', link: '/project/gearbox', objectFit: 'cover' },
+    { id: 'p3', title: 'Forge Trades Simulator', description: 'UX/UI · 2025', image: '/images/covers/forge-cover.jpg', link: '/case-study/forge', objectFit: 'contain' },
+    { id: 'p4', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.jpg', link: '/project/broken-yolk', objectFit: 'cover' },
+    { id: 'p5', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.jpg?v=2', link: '/project/signatures-for-sound' },
+    { id: 'p6', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.jpg', link: '/project/clover-x-barbershop' },
+    { id: 'p7', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.jpg', link: '/project/triunity', objectFit: 'cover' },
   ];
 
   return (
     <div className="px-4 md:px-8 lg:px-12 pt-4 md:pt-6 pb-8 md:pb-16 max-w-[1920px] mx-auto w-full space-y-10 md:space-y-14 [&>*:nth-child(2)]:!mt-10 md:[&>*:nth-child(2)]:!mt-14 [&>*:nth-child(3)]:!mt-10 md:[&>*:nth-child(3)]:!mt-14">
-      {/* Case Studies Section */}
-      <section id="case-studies" className="space-y-4">
+      {/* Selected Work heading */}
+      <section className="space-y-4">
         <div className="pt-4">
           <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            Case Studies.
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
-          {caseStudies.map((study) => (
-            <CaseStudyCard key={study.id} study={study} />
-          ))}
-        </div>
-      </section>
-
-      {/* Select Work heading */}
-      <section className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
-          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            Select Work.
+            Selected Work.
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
@@ -75,8 +55,26 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Case Study Section */}
+      <section id="case-studies" className="space-y-4">
+        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
+          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
+            Case Study.
+          </h2>
+        </div>
+        <div
+          className={`grid grid-cols-1 ${
+            caseStudies.length > 1 ? 'md:grid-cols-2' : 'md:grid-cols-1'
+          } gap-4 md:gap-6 pt-4 w-full`}
+        >
+          {caseStudies.map((study) => (
+            <CaseStudyCard key={study.id} study={study} />
+          ))}
+        </div>
+      </section>
+
       {/* Projects Section — same spacing as Case Studies (header + border) */}
-      <section className="space-y-4">
+      <section id="projects" className="space-y-4">
         <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
           <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
             Projects.

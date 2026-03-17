@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Cursor from './components/Cursor';
 import ChatWidget from './components/ChatWidget';
 import Home from './pages/Home';
+import Landing from './pages/Landing';
 import ForgeCaseStudy from './pages/ForgeCaseStudy';
 import MosaicCaseStudy from './pages/MosaicCaseStudy';
 import CloverXBarbershop from './pages/CloverXBarbershop';
@@ -92,7 +93,8 @@ const App: React.FC = () => {
         >
           <main className="pt-16 md:pt-20 min-w-0">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/work" element={<Home />} />
               <Route path="/case-study/forge" element={<ForgeCaseStudy />} />
               <Route path="/case-study/mosaic" element={<MosaicCaseStudy />} />
               <Route path="/project/clover-x-barbershop" element={<CloverXBarbershop />} />
