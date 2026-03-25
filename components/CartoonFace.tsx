@@ -2,15 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
   className?: string;
-}
+} // props means properties. this is needed because the component needs to know the className of the container.
 
-const BOXBOUNDS = '650 200 650 700';
+const BOXBOUNDS = '650 200 650 700'; // this is the bounding box for the svg.
 
 const LEFT_EYE = { x: 893.11, y: 598.98, radius: 22.31 };
 const RIGHT_EYE = { x: 1061.73, y: 598.42, radius: 21.74 };
 const EYE_RANGE = 8;
 
-const SVG_PATHS = [
+const SVG_PATHS = [ // this is the svg path for the head.
   'M974.28,692.29c.31,4.49,4.04,7.92,8.47,7.92.19,0,.39,0,.58-.02,4.68-.32,8.22-4.37,7.9-9.06l-4.97-73.08c-.32-4.68-4.38-8.23-9.06-7.9-4.68.32-8.22,4.37-7.9,9.06l4.97,73.08Z',
   'M1061.08,728.37l-70.79-20.27c-5.83-1.67-12.07-1.2-17.57,1.33l-60.84,27.9c-4.27,1.96-6.14,7-4.18,11.27,1.43,3.12,4.51,4.96,7.73,4.96,1.19,0,2.39-.25,3.54-.78l60.84-27.91c1.82-.83,3.88-.99,5.81-.44l70.79,20.27c4.51,1.29,9.22-1.32,10.51-5.83,1.29-4.51-1.32-9.22-5.83-10.51Z',
   'M1010.27,736.62l-48.4,5.74c-4.66.55-7.99,4.78-7.44,9.44.51,4.32,4.18,7.5,8.43,7.5.33,0,.67-.02,1.01-.06l48.4-5.74c4.66-.55,7.99-4.78,7.44-9.44-.55-4.66-4.78-8-9.44-7.44Z',
@@ -22,7 +22,7 @@ const SVG_PATHS = [
 ];
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
+  return Math.min(max, Math.max(min, value)); // this is a helper function to keep the value between a minimum and maximum.
 }
 
 function KunwarCartoon({ className = '' }: Props) {
@@ -36,6 +36,7 @@ function KunwarCartoon({ className = '' }: Props) {
         cancelAnimationFrame(animationFrameRef.current);
       }
 
+// this is the animation that tracks the mouse.
       animationFrameRef.current = requestAnimationFrame(() => {
         const container = containerRef.current;
         if (!container) return;
@@ -47,7 +48,7 @@ function KunwarCartoon({ className = '' }: Props) {
         const distanceX = event.clientX - centerX;
         const distanceY = event.clientY - centerY;
 
-        const maxDistance = Math.max(bounds.width, bounds.height) / 2;
+        const maxDistance = Math.max(bounds.width, bounds.height) / 2; // this is the maximum distance the cursor can move from the center of the head.
         const ratioX = clamp(distanceX / maxDistance, -1, 1);
         const ratioY = clamp(distanceY / maxDistance, -1, 1);
 
@@ -58,7 +59,7 @@ function KunwarCartoon({ className = '' }: Props) {
       });
     }
 
-    window.addEventListener('mousemove', trackMouse, { passive: true });
+    window.addEventListener('mousemove', trackMouse, { passive: true }); // this is the event listener that tracks the mouse.
     return () => {
       window.removeEventListener('mousemove', trackMouse);
       if (animationFrameRef.current) {
@@ -68,7 +69,9 @@ function KunwarCartoon({ className = '' }: Props) {
   }, []);
 
   return (
-    <div ref={containerRef} className={className}>
+    <>
+      {/* without this containerRef, the code won't know where the cartoon is positioned on the page which would cause the eyes to not know which direction to look */}
+      <div ref={containerRef} className={className}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={BOXBOUNDS}
@@ -99,8 +102,10 @@ function KunwarCartoon({ className = '' }: Props) {
         </g>
 
         <g id="eyes">
+          {/* this is the group that contains the eyes. */}
           <circle
             className="eyes"
+            // these two shapes are the pupils that follow the cursor. each time the cursor moves, the cx and cy values are updated. R stays constant.
             cx={LEFT_EYE.x + eyeOffset.x}
             cy={LEFT_EYE.y + eyeOffset.y}
             r={LEFT_EYE.radius}
@@ -113,7 +118,8 @@ function KunwarCartoon({ className = '' }: Props) {
           />
         </g>
       </svg>
-    </div>
+      </div>
+    </>
   );
 }
 
