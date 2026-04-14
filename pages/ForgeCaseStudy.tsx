@@ -38,15 +38,15 @@ const scrollTo = (id: string) => {
 
 /* Final Design carousel: row1 = 6,8,7; row2 = 5,4,3; row3 = unnumbered, 1, 2 */
 const FINAL_DESIGN_SLIDES = [
-  '/images/forge-iphone-6.jpg',
-  '/images/forge-iphone-8.jpg',
-  '/images/forge-iphone-7.jpg',
-  '/images/forge-iphone-5.jpg',
-  '/images/forge-iphone-4.jpg',
-  '/images/forge-iphone-3.jpg',
-  '/images/forge-iphone.jpg',
-  '/images/forge-iphone-1.jpg',
-  '/images/forge-iphone-2.jpg',
+  '/images/forge-iphone-6.png',
+  '/images/forge-iphone-8.png',
+  '/images/forge-iphone-7.png',
+  '/images/forge-iphone-5.png',
+  '/images/forge-iphone-4.png',
+  '/images/forge-iphone-3.png',
+  '/images/forge-iphone.png',
+  '/images/forge-iphone-1.png',
+  '/images/forge-iphone-2.png',
 ];
 
 const SLIDES_PER_PAGE = 3;

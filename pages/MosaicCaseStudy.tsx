@@ -18,7 +18,7 @@ const scrollTo = (id: string) => {
 };
 
 const SLIDES_PER_PAGE = 3;
-const MOSAIC_FINAL_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/images/mosaic-${n}.jpg`);
+const MOSAIC_FINAL_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/images/mosaic-${n}.png`);
 const MosaicFinalDesignCarousel: React.FC = () => {
   const totalPages = Math.ceil(MOSAIC_FINAL_SLIDES.length / SLIDES_PER_PAGE);
   const [page, setPage] = useState(0);
@@ -298,7 +298,7 @@ const MosaicCaseStudy: React.FC = () => {
             <div className="flex flex-col gap-8 w-full max-w-full">
               <div>
                   <div className="rounded overflow-hidden w-full mb-4">
-                    <img src="/images/mosaic-graphicdesign1.jpg" alt="Mosaic — Gems user avatars" className="w-full h-auto max-w-full object-contain" />
+                    <img src="/images/mosaic-graphicdesign1.png" alt="Mosaic — Gems user avatars" className="w-full h-auto max-w-full object-contain" />
                   </div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">These are called "Gems"</h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
@@ -307,7 +307,7 @@ const MosaicCaseStudy: React.FC = () => {
               </div>
               <div>
                   <div className="rounded overflow-hidden w-full mb-4">
-                    <img src="/images/mosaic-graphicdesign2.jpg" alt="Mosaic — onboarding and project creation graphics" className="w-full h-auto max-w-full object-contain" />
+                    <img src="/images/mosaic-graphicdesign2.png" alt="Mosaic — onboarding and project creation graphics" className="w-full h-auto max-w-full object-contain" />
                   </div>
                 <h3 className="font-sans font-normal text-lg tracking-tight text-brand-dark dark:text-brand-light mb-2">Simplicity is the best</h3>
                 <p className="font-sans text-brand-dark dark:text-brand-light leading-relaxed">
