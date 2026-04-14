@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({ hideOnMobile }) => {
         <div ref={menuContainerRef} className="relative flex items-center gap-3 md:gap-4">
           <Link
             ref={logoRef}
-            to="/"
+            to="/work"
             className="flex items-center transition-colors text-brand-dark md:hover:text-orange-500 py-1"
             aria-label="Kunwar Manshahia – Home"
             onMouseMove={onLogoMouseMove}
