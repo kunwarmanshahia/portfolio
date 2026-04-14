@@ -99,7 +99,7 @@ const ForgeCaseStudy: React.FC = () => {
   return (
     <div className="px-4 md:px-8 lg:px-12 pt-[1.8rem] md:pt-[3.6rem] pb-12 md:pb-24 max-w-[1920px] mx-auto w-full">
       <Link
-        to="/"
+        to="/work"
         className="inline-flex items-center gap-2 text-sm font-sans font-medium text-brand-dark/60 dark:text-brand-light/60 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors mb-6 lg:hidden"
       >
         ← Back
@@ -109,7 +109,7 @@ const ForgeCaseStudy: React.FC = () => {
         <aside className="hidden lg:block lg:w-48 xl:w-52 flex-shrink-0 order-2 lg:order-1">
           <nav className="lg:sticky lg:top-24 space-y-1">
             <Link
-              to="/#case-studies"
+              to="/work#case-studies"
               className="flex items-center gap-2 font-sans text-sm text-brand-dark/70 dark:text-brand-light/70 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors mb-6"
             >
               <span aria-hidden>←</span>
