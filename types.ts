@@ -19,5 +19,3 @@ export interface Project {
   objectFit?: 'cover' | 'contain';
   objectPosition?: string;
 }
-
-export type Theme = 'light' | 'dark';

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Theme } from '../types';
 
 interface Message {
   id: string;
@@ -8,7 +7,6 @@ interface Message {
 }
 
 interface ChatWidgetProps {
-  theme: Theme;
   open: boolean;
   onClose: () => void;
   width?: string;
@@ -21,7 +19,7 @@ function uniqueId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
-const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '400px' }) => {
+const ChatWidget: React.FC<ChatWidgetProps> = ({ open, onClose, width = '400px' }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -95,6 +93,15 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
     }
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [open, onClose]);
+
   const sendMessage = async (text?: string) => {
     const messageText = text || input.trim();
     console.log('[kai] sendMessage called', { messageText: messageText?.slice(0, 20), loading });
@@ -167,11 +174,10 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
     sendMessage(question);
   };
 
-  const isDark = theme === 'dark';
-  const chatBg = isDark ? 'bg-brand-dark' : 'bg-brand-light';
-  const textClass = isDark ? 'text-brand-light' : 'text-brand-dark';
-  const borderClass = isDark ? 'border-brand-light' : 'border-brand-dark';
-  const inputBg = isDark ? 'bg-brand-light/10' : 'bg-brand-dark/5';
+  const chatBg = 'bg-brand-light';
+  const textClass = 'text-brand-dark';
+  const borderClass = 'border-brand-dark';
+  const inputBg = 'bg-brand-dark/5';
   const inputBorder = 'border-brand-dark';
   const userBubbleBg = inputBg;
   const userBubbleBorder = inputBorder;
@@ -180,8 +186,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
 
   const effectiveWidth = isMobile ? '100%' : width;
   const containerClasses = isMobile
-    ? `fixed bottom-0 left-0 right-0 z-40 h-[75vh] max-h-[640px] ${chatBg} shadow-xl border-t-2 ${borderClass} flex flex-col transition-transform duration-300 ease-out rounded-t-2xl`
-    : `fixed top-0 right-0 z-40 h-full ${chatBg} shadow-xl border-l-2 ${borderClass} flex flex-col transition-transform duration-300 ease-out`;
+    ? `fixed bottom-0 left-0 right-0 z-40 h-[75vh] max-h-[640px] ${chatBg} shadow-xl border-t-[3px] ${borderClass} flex flex-col transition-transform duration-300 ease-out rounded-t-2xl`
+    : `fixed right-0 z-40 top-[6.5rem] h-[calc(100vh-6.5rem)] ${chatBg} shadow-xl border-l-2 border-t-[3px] ${borderClass} flex flex-col transition-transform duration-300 ease-out rounded-tl-xl backdrop-blur-md`;
 
   return (
     <div
@@ -192,43 +198,11 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
       }}
     >
       <div className="flex flex-col h-full min-h-0">
-      {/* Header */}
-      <div className={`flex items-center justify-between border-b-2 ${borderClass} px-4 md:px-6 py-3 md:py-4 shrink-0 ${textClass}`}>
-          <button
-            type="button"
-            onClick={onClose}
-            className="inline-flex items-center gap-2 text-xs md:text-sm font-sans uppercase tracking-[0.18em] opacity-80 hover:opacity-100 transition-opacity"
-          >
-            <span aria-hidden>←</span>
-            <span>Back</span>
-          </button>
-
-          <div className="flex items-center gap-3">
-            {/* Refresh icon */}
-            <button
-              type="button"
-              onClick={() => {
-                setMessages([]);
-                setError(null);
-              }}
-              className={`opacity-60 hover:opacity-100 transition-opacity ${textClass}`}
-              aria-label="Reset chat"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                <path d="M21 3v5h-5" />
-                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                <path d="M3 21v-5h5" />
-              </svg>
-            </button>
-          </div>
-      </div>
-
-      {/* Content Area - lots of top padding so content sits lower like reference */}
+      {/* Content Area */}
       <div className={`flex flex-col flex-1 min-h-0 ${textClass}`}>
-        <div className="flex-1 overflow-y-auto px-4 md:px-6 pt-8 md:pt-16 pb-4 md:pb-6 min-h-0">
+        <div className="flex-1 overflow-y-auto px-4 md:px-6 pt-5 md:pt-6 pb-4 md:pb-6 min-h-0">
             {messages.length === 0 ? (
-              <div className="space-y-5 pt-6">
+              <div className="space-y-5 pt-4">
                 {/* Greeting */}
                 <p className={`text-base md:text-lg font-medium ${textClass}`}>hey! what’s up?</p>
                 {/* Suggestions with ↳ arrow, lighter grey text */}
@@ -268,7 +242,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
                   </div>
                 )}
                 {error && (
-                  <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-2 text-sm text-red-500 dark:text-red-400">
+                  <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-2 text-sm text-red-500">
                     {error}
                   </div>
                 )}
@@ -301,17 +275,17 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ theme, open, onClose, width = '
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask about Kunwar…"
+                placeholder="Ask me anything!"
                 rows={1}
                 disabled={loading}
-                className={`flex-1 min-h-[44px] resize-none rounded-lg border-2 ${inputBorder} ${inputBg} px-4 py-3 text-sm ${textClass} placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-brand-dark/20 dark:focus:ring-brand-light/20 disabled:opacity-50`}
+                className={`flex-1 min-h-[44px] resize-none rounded-lg border-2 ${inputBorder} ${inputBg} px-4 py-3 text-sm ${textClass} placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-brand-dark/20 disabled:opacity-50`}
                 style={{ maxHeight: '120px' }}
               />
               <button
                 type="button"
                 onClick={() => sendMessage()}
                 disabled={loading || !input.trim()}
-                className={`flex shrink-0 items-center justify-center rounded-lg border-2 ${borderClass} ${inputBg} min-h-[44px] w-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-brand-dark/20 dark:focus:ring-brand-light/20 disabled:opacity-50 disabled:pointer-events-none ${textClass} hover:opacity-80 active:opacity-70`}
+                className={`flex shrink-0 items-center justify-center rounded-lg border-2 ${borderClass} ${inputBg} min-h-[44px] w-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-brand-dark/20 disabled:opacity-50 disabled:pointer-events-none ${textClass} hover:opacity-80 active:opacity-70`}
                 aria-label="Send message"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

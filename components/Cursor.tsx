@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Theme } from '../types';
-
-interface CursorProps {
-  theme: Theme;
-}
 
 const CLICKABLE_SELECTOR = 'a, button, [role="button"], [data-clickable]';
 
-const Cursor: React.FC<CursorProps> = ({ theme }) => {
+const Cursor: React.FC = () => {
   const [cursor, setCursor] = useState<{ x: number; y: number; overClickable: boolean } | null>(null);
 
   useEffect(() => {
@@ -37,7 +32,7 @@ const Cursor: React.FC<CursorProps> = ({ theme }) => {
 
   if (cursor === null) return null;
 
-  const fillColor = theme === 'dark' ? '#98CE00' : '#FF4E00';
+  const fillColor = '#FF4E00';
 
   return (
     <div

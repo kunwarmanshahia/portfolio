@@ -1,23 +1,34 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
-import { Theme } from '../types';
 
 const LOGO_JOYSTICK_MAX = 10;
 
-interface HeaderProps { 
-  theme: Theme; 
-  onToggleTheme: () => void;
-  chatOpen: boolean;
-  onToggleChat: () => void;
+interface HeaderProps {
   hideOnMobile: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggleChat, hideOnMobile }) => {
+const Header: React.FC<HeaderProps> = ({ hideOnMobile }) => {
   const location = useLocation();
   const logoRef = useRef<HTMLAnchorElement>(null);
+  const menuContainerRef = useRef<HTMLDivElement>(null);
   const [logoOffset, setLogoOffset] = useState({ x: 0, y: 0 });
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [navMenuOpen, setNavMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setNavMenuOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!navMenuOpen) return;
+    const handlePointerDown = (event: MouseEvent) => {
+      if (menuContainerRef.current && !menuContainerRef.current.contains(event.target as Node)) {
+        setNavMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, [navMenuOpen]);
 
   const onLogoMouseMove = useCallback((e: React.MouseEvent) => {
     if (typeof window !== 'undefined' && window.innerWidth < 768) return;
@@ -39,58 +50,20 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
     setLogoOffset({ x: 0, y: 0 });
   }, []);
 
-  const navLinks = [
-    { name: 'Projects', path: '/work#projects', external: false },
-    { name: 'Resume', path: '/resume', external: false },
-  ];
-
-  const isDark = theme === 'dark';
-
   const headerVisibilityClass = hideOnMobile ? '-translate-y-full md:translate-y-0' : 'translate-y-0';
 
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 bg-brand-light/70 dark:bg-brand-dark/70 header-border px-4 py-4 md:px-8 lg:px-12 backdrop-blur-md transition-colors duration-300 transform transition-transform ${headerVisibilityClass}`}>
-      <div className="max-w-[1920px] mx-auto w-full">
-        <div className="flex items-center justify-between w-full relative">
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            className="md:hidden flex items-center text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMobileMenuOpen(prev => !prev)}
-          >
-            <span className="sr-only">Menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {mobileMenuOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </>
-              )}
-            </svg>
-          </button>
+  const workIsActive = location.pathname === '/work';
 
-          {/* Logo – joystick follow on hover; centered on mobile, left on desktop */}
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 bg-brand-light/80 backdrop-blur-md transition-transform duration-300 ${headerVisibilityClass}`}
+    >
+      <div className="max-w-[1920px] mx-auto w-full relative flex items-center justify-center px-4 py-4 md:px-8 lg:px-12 min-h-[4.5rem]">
+        <div ref={menuContainerRef} className="relative flex items-center gap-3 md:gap-4">
           <Link
             ref={logoRef}
-            to="/work"
-            className="flex items-center transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 py-1 pr-2 absolute left-1/2 -translate-x-1/2 md:static md:transform-none"
+            to="/"
+            className="flex items-center transition-colors text-brand-dark md:hover:text-orange-500 py-1"
             aria-label="Kunwar Manshahia – Home"
             onMouseMove={onLogoMouseMove}
             onMouseLeave={onLogoMouseLeave}
@@ -99,114 +72,63 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, chatOpen, onToggl
               className="inline-block transition-transform duration-150 ease-out"
               style={{ transform: `translate(${logoOffset.x}px, ${logoOffset.y}px)` }}
             >
-              <Logo className="h-10 md:h-12 w-auto shrink-0 scale-105 scale-x-[1.02] text-current" />
+              <Logo className="h-[3.25rem] md:h-[3.9rem] w-auto shrink-0 scale-105 scale-x-[1.02] text-current" />
             </span>
           </Link>
 
-          {/* Desktop nav: Ask My AI, Resume, Projects, Dark toggle */}
-          <nav className="hidden md:flex items-center space-x-6 md:space-x-10 font-sans text-sm md:text-base font-medium">
-            {/* Ask My AI Button (first) */}
-            <button
-              onClick={onToggleChat}
-              aria-label={chatOpen ? 'Close Ask My AI chat' : 'Open Ask My AI chat'}
-              className="group/kai flex items-center gap-1.5 font-sans font-medium text-sm md:text-base text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors focus:outline-none"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={`transition-colors duration-300 group-hover/kai:stroke-orange-500 ${chatOpen ? 'stroke-orange-500' : 'stroke-brand-dark dark:stroke-brand-light opacity-50'}`}
-              >
-                <path d="M11.5 3V21M20.5 12L2.5 12M15.9497 7.5L7.05024 16.3995M7.05026 7.5L15.9498 16.3995" />
-              </svg>
-              <span>Ask My AI</span>
-            </button>
-
-            {navLinks.map((link) => (
-              link.external ? (
-                <a
-                  key={link.name}
-                  href={link.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400"
-                >
-                  {link.name}
-                </a>
-              ) : (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className={`${location.pathname === link.path ? 'underline underline-offset-4' : ''} transition-colors text-brand-dark dark:text-brand-light md:hover:text-orange-500 md:dark:hover:text-orange-400`}
-                >
-                  {link.name}
-                </Link>
-              )
-            ))}
-
-          {/* Dark mode toggle – pill + knob, portfolio colours */}
-          <label htmlFor="dark-mode" className="relative inline-flex items-center cursor-pointer">
-            <input
-              id="dark-mode"
-              type="checkbox"
-              className="sr-only peer"
-              role="switch"
-              aria-label="Dark mode"
-              checked={isDark}
-              onChange={onToggleTheme}
-            />
-            <div
-              className="relative group peer bg-brand-light rounded-full duration-300 w-[41px] h-5 ring-2 ring-brand-dark after:content-[''] after:duration-300 after:bg-brand-dark after:rounded-full after:absolute after:h-3.5 after:w-3.5 after:top-[3px] after:left-[3px] peer-checked:after:translate-x-[21px] peer-checked:after:bg-brand-light peer-checked:ring-brand-light peer-checked:bg-brand-dark peer-hover:after:scale-95"
+          <button
+            type="button"
+            className="flex items-center justify-center text-brand-dark md:hover:text-orange-500 transition-colors p-1 -mr-1 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark/30"
+            aria-label={navMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={navMenuOpen}
+            onClick={() => setNavMenuOpen((open) => !open)}
+          >
+            <span className="sr-only">Menu</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`transition-transform duration-200 ${navMenuOpen ? 'rotate-180' : ''}`}
               aria-hidden
-            />
-          </label>
-        </nav>
-        </div>
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
 
-        {/* Mobile menu drawer */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-3 border-t border-brand-dark/10 dark:border-brand-light/10 pt-3 space-y-3 text-sm font-sans text-brand-dark dark:text-brand-light">
-            <button
-              type="button"
-              onClick={() => {
-                onToggleChat();
-                setMobileMenuOpen(false);
-              }}
-              className="block w-full text-left underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
+          {navMenuOpen && (
+            <div
+              className="absolute top-full left-1/2 z-50 mt-3 min-w-[12rem] -translate-x-1/2 rounded-lg border border-brand-dark/10 bg-brand-light py-2 shadow-lg"
+              role="menu"
             >
-              ask my ai
-            </button>
-            <Link
-              to="/resume"
-              className="block underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              resume
-            </Link>
-            <Link
-              to="/work#projects"
-              className="block underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              projects
-            </Link>
-            <button
-              type="button"
-              onClick={() => {
-                onToggleTheme();
-              }}
-              className="block w-full text-left underline underline-offset-4 md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
-            >
-              {isDark ? 'light mode' : 'dark mode'}
-            </button>
-          </div>
-        )}
+              <Link
+                to="/work#projects"
+                role="menuitem"
+                className={`block px-4 py-2.5 font-sans text-sm font-medium text-brand-dark md:hover:bg-brand-dark/5 md:hover:text-orange-500 transition-colors ${
+                  workIsActive ? 'bg-brand-dark/[0.04]' : ''
+                }`}
+                onClick={() => setNavMenuOpen(false)}
+              >
+                Work
+              </Link>
+              <Link
+                to="/resume"
+                role="menuitem"
+                className={`block px-4 py-2.5 font-sans text-sm font-medium text-brand-dark md:hover:bg-brand-dark/5 md:hover:text-orange-500 transition-colors ${
+                  location.pathname === '/resume' ? 'bg-brand-dark/[0.04]' : ''
+                }`}
+                onClick={() => setNavMenuOpen(false)}
+              >
+                Resume
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

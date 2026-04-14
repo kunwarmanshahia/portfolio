@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Cursor from './components/Cursor';
 import ChatWidget from './components/ChatWidget';
+import ChatFab from './components/ChatFab';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import ForgeCaseStudy from './pages/ForgeCaseStudy';
@@ -15,39 +16,20 @@ import Gearbox from './pages/Gearbox';
 import BrokenYolk from './pages/BrokenYolk';
 import SignaturesForSound from './pages/SignaturesForSound';
 import Resume from './pages/Resume';
-import { Theme } from './types';
 
 const App: React.FC = () => {
-  const [theme, setTheme] = useState<Theme>('dark');
   const [chatOpen, setChatOpen] = useState(false);
   const [hideHeaderOnMobile, setHideHeaderOnMobile] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-    // No saved theme: keep default dark (initial state)
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('theme');
   }, []);
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
-  };
-
   const toggleChat = () => {
-    setChatOpen(prev => !prev);
+    setChatOpen((prev) => !prev);
   };
 
-  // Mobile-only header hide/show based on scroll direction.
   useEffect(() => {
     let lastY = window.scrollY;
     let ticking = false;
@@ -77,16 +59,11 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <Cursor theme={theme} />
-      <div className="min-h-screen">
-        <Header
-          theme={theme}
-          onToggleTheme={toggleTheme}
-          chatOpen={chatOpen}
-          onToggleChat={toggleChat}
-          hideOnMobile={hideHeaderOnMobile}
-        />
-        <ChatWidget theme={theme} open={chatOpen} onClose={() => setChatOpen(false)} width={CHAT_WIDTH} />
+      <Cursor />
+      <div className="min-h-screen bg-brand-light text-brand-dark">
+        <Header hideOnMobile={hideHeaderOnMobile} />
+        <ChatFab chatOpen={chatOpen} onToggle={toggleChat} />
+        <ChatWidget open={chatOpen} onClose={() => setChatOpen(false)} width={CHAT_WIDTH} />
         <div
           className="transition-[margin-right] duration-300 ease-out"
           style={{ marginRight: chatOpen ? CHAT_WIDTH : 0 }}
@@ -106,23 +83,20 @@ const App: React.FC = () => {
               <Route path="/resume" element={<Resume />} />
             </Routes>
           </main>
-          <footer className="p-8 md:p-12 text-xs font-mono opacity-50 uppercase tracking-widest border-t border-brand-dark/10 dark:border-brand-light/10 mt-20">
+          <footer className="p-8 md:p-12 text-xs font-mono opacity-50 uppercase tracking-widest border-t border-brand-dark/10 mt-20">
             <div className="flex flex-col gap-3 items-center justify-between md:flex-row">
               <a
                 href="https://linkedin.com/in/kunwarmanshahia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
+                className="md:hover:text-orange-500 transition-colors"
               >
                 linkedin
               </a>
               <span className="text-center">
                 © {new Date().getFullYear()} Kunwar Manshahia — Made In Canada
               </span>
-              <a
-                href="mailto:bykunwar@gmail.com"
-                className="md:hover:text-orange-500 md:dark:hover:text-orange-400 transition-colors"
-              >
+              <a href="mailto:bykunwar@gmail.com" className="md:hover:text-orange-500 transition-colors">
                 bykunwar@gmail.com
               </a>
             </div>

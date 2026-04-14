@@ -12,10 +12,10 @@ const Home: React.FC = () => {
     },
     {
       id: 'sw2',
-      title: 'Triunity Martial Arts',
-      description: 'Client Branding · 2025',
-      image: '/images/triunity-1.jpg',
-      link: '/project/triunity',
+      title: 'The Broken Yolk',
+      description: 'Layout Design · 2025',
+      image: '/images/brokenyolk-cover.jpg',
+      link: '/project/broken-yolk',
     },
   ];
 
@@ -33,10 +33,10 @@ const Home: React.FC = () => {
     { id: 'p1', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.jpg', link: '/project/la-haine' },
     { id: 'p2', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.jpg', link: '/project/gearbox', objectFit: 'cover' },
     { id: 'p3', title: 'Forge Trades Simulator', description: 'UX/UI · 2025', image: '/images/covers/forge-cover.jpg', link: '/case-study/forge', objectFit: 'contain' },
-    { id: 'p4', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.jpg', link: '/project/broken-yolk', objectFit: 'cover' },
+    { id: 'p4', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.jpg', link: '/project/triunity', objectFit: 'cover' },
     { id: 'p5', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.jpg?v=2', link: '/project/signatures-for-sound' },
     { id: 'p6', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-1.jpg', link: '/project/clover-x-barbershop' },
-    { id: 'p7', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.jpg', link: '/project/triunity', objectFit: 'cover' },
+    { id: 'p7', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.jpg', link: '/project/broken-yolk', objectFit: 'cover' },
   ];
 
   return (
