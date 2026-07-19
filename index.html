@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,125 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunwar Manshahia | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                        colors: {
-                        brand: {
-                            dark: '#282828',
-                            light: '#f8f3ec',
-                        }, 
-                        orange: {
-                            400: 'var(--color-alt)',
-                            500: 'var(--color-alt)',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Inconsolata', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        :root { --color-alt: #FF4E00; }
-        .dark { --color-alt: #98CE00; }
-        body {
-            transition: background-color 0.3s ease;
-            overflow-x: hidden;
-        }
-        .header-border {
-            border-bottom: 2px solid currentColor;
-        }
-        .section-divider {
-            border-bottom: 2px solid currentColor;
-            opacity: 0.15;
-        }
-        .dark .section-divider {
-            opacity: 0.2;
-        }
-        .card-aspect {
-            aspect-ratio: 4 / 5;
-        }
-
-        @keyframes fall-down {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 1;
-            }
-            20% {
-                transform: translate(var(--dx), 20px) rotate(var(--dr));
-            }
-            100% {
-                transform: translate(var(--dx-final), 120vh) rotate(var(--dr-final));
-                opacity: 0;
-            }
-        }
-
-        .letter-falling {
-            display: inline-block;
-            animation: fall-down var(--duration) forwards ease-in;
-            animation-delay: var(--delay);
-            pointer-events: none;
-        }
-        .letter-stay {
-            display: inline-block;
-            transition: color 1s ease;
-        }
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-        @keyframes spinOnce {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-once {
-            animation: spinOnce 0.5s ease-in-out 1;
-        }
-        /* Custom cursor: hide system cursor everywhere */
-        html.custom-cursor,
-        html.custom-cursor * {
-            cursor: none !important;
-        }
-    </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
     <meta property="og:title" content="Kunwar Manshahia | Portfolio">
     <meta property="og:image" content="/og-image.png?v=2">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/og-image.png?v=2">
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react-dom": "https://esm.sh/react-dom@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-    "@react-three/fiber": "https://esm.sh/@react-three/fiber@^9.5.0",
-    "@react-three/drei": "https://esm.sh/@react-three/drei@^10.7.7",
-    "three": "https://esm.sh/three@^0.182.0"
-  }
-}
-</script>
-    <link rel="stylesheet" href="/index.css">
-    <script src="https://t.contentsquare.net/uxa/dabdaa764158f.js"></script>
+    <style>
+        html, body, #root {
+            margin: 0;
+            min-height: 100%;
+            background: #ffffff;
+        }
+    </style>
 </head>
-<body class="bg-brand-light text-brand-dark dark:bg-brand-dark dark:text-brand-light font-sans">
+<body class="bg-white text-black">
     <div id="root"></div>
-<script type="module" src="/index.tsx"></script>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
