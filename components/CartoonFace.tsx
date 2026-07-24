@@ -6,12 +6,12 @@ const rightEye = new URL('../KunwarCartoon/RightEye-02.svg', import.meta.url).hr
 
 interface Props {
   className?: string;
-} // props means properties. this is needed because the component needs to know the className of the container.
+}
 
 const EYE_RANGE = 3;
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value)); // this is a helper function to keep the value between a minimum and maximum.
+  return Math.min(max, Math.max(min, value));
 }
 
 function KunwarCartoon({ className = '' }: Props) {
@@ -83,46 +83,51 @@ function KunwarCartoon({ className = '' }: Props) {
   };
 
   return (
-    <>
-      {/* without this containerRef, the code won't know where the cartoon is positioned on the page which would cause the eyes to not know which direction to look */}
-      <div
-        ref={containerRef}
-        className={`relative ${className}`}
-        onClick={triggerBlink}
+    <div
+      ref={containerRef}
+      className={`relative w-full ${className}`}
+      onClick={triggerBlink}
+      style={{
+        transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transformStyle: 'preserve-3d',
+        transition: 'transform 70ms ease-out',
+        cursor: 'pointer',
+      }}
+    >
+      <img
+        src={leftEye}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-auto pointer-events-none select-none"
+        draggable={false}
         style={{
-          transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transformStyle: 'preserve-3d',
+          transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px) scaleY(${isBlinking ? 0.1 : 1})`,
+          transformOrigin: 'center',
           transition: 'transform 70ms ease-out',
-          cursor: 'pointer',
+          filter: 'brightness(0)',
         }}
-      >
-        <img
-          src={leftEye}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-auto pointer-events-none select-none"
-          draggable={false}
-          style={{
-            transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px) scaleY(${isBlinking ? 0.1 : 1})`,
-            transformOrigin: 'center',
-            transition: 'transform 70ms ease-out',
-          }}
-        />
-        <img
-          src={rightEye}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-auto pointer-events-none select-none"
-          draggable={false}
-          style={{
-            transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px) scaleY(${isBlinking ? 0.1 : 1})`,
-            transformOrigin: 'center',
-            transition: 'transform 70ms ease-out',
-          }}
-        />
-        <img src={kunwarFace} alt="Kunwar cartoon face" className="relative z-10 w-full h-auto block" draggable={false} />
-      </div>
-    </>
+      />
+      <img
+        src={rightEye}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-auto pointer-events-none select-none"
+        draggable={false}
+        style={{
+          transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px) scaleY(${isBlinking ? 0.1 : 1})`,
+          transformOrigin: 'center',
+          transition: 'transform 70ms ease-out',
+          filter: 'brightness(0)',
+        }}
+      />
+      <img
+        src={kunwarFace}
+        alt="Kunwar cartoon face"
+        className="relative z-10 w-full h-auto block"
+        style={{ maxHeight: 'calc(100vh - 200px)', objectFit: 'contain' }}
+        draggable={false}
+      />
+    </div>
   );
 }
 

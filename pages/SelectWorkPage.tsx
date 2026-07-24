@@ -1,60 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import KunwarCartoon from '../components/CartoonFace';
-import { projects } from '../lib/projects';
+import { selectWorkProjects } from '../lib/projects';
 
 const switzer: React.CSSProperties = {
   fontFamily: "'Switzer', sans-serif",
 };
 
-/** Horizontal mouse travel (px) before advancing to the next project */
-const ZONE_PX = 60;
-
-const Home: React.FC = () => {
-  const [projectsOpen, setProjectsOpen] = useState(false);
+const SelectWorkPage: React.FC = () => {
+  const [projectsOpen, setProjectsOpen] = useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isIdle, setIsIdle] = useState(true);
-  const idleTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    projects.forEach((p) => {
-      const img = new Image();
-      img.src = p.image;
-    });
-  }, []);
-
-  useEffect(() => {
-    const count = projects.length;
-    if (count === 0) return;
-
-    const bumpIdleTimer = () => {
-      setIsIdle(false);
-      if (idleTimerRef.current !== null) {
-        window.clearTimeout(idleTimerRef.current);
-      }
-      idleTimerRef.current = window.setTimeout(() => {
-        setIsIdle(true);
-      }, 2000);
-    };
-
-    const onMove = (e: MouseEvent) => {
-      bumpIdleTimer();
-      const slotWidth = Math.max(ZONE_PX, window.innerWidth / count);
-      const next = Math.min(count - 1, Math.max(0, Math.floor(e.clientX / slotWidth)));
-      setActiveIndex((prev) => (prev === next ? prev : next));
-    };
-
-    window.addEventListener('mousemove', onMove);
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      if (idleTimerRef.current !== null) {
-        window.clearTimeout(idleTimerRef.current);
-      }
-    };
-  }, []);
-
-  const active = projects[Math.min(activeIndex, Math.max(0, projects.length - 1))];
 
   return (
     <div className="min-h-screen text-black flex flex-col" style={{ background: '#f4f4f2' }}>
@@ -65,15 +19,13 @@ const Home: React.FC = () => {
             onMouseEnter={() => setProjectsOpen(true)}
             onMouseLeave={() => setProjectsOpen(false)}
           >
-            <button
-              type="button"
+            <Link
+              to="/"
               className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
               style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              aria-expanded={projectsOpen}
-              onClick={() => setProjectsOpen((v) => !v)}
             >
               Projects (...)
-            </button>
+            </Link>
             <div
               className={`flex items-center gap-3 overflow-hidden transition-all duration-300 ${
                 projectsOpen ? 'max-w-[16rem] opacity-100' : 'max-w-0 opacity-0'
@@ -86,13 +38,12 @@ const Home: React.FC = () => {
               >
                 See All
               </Link>
-              <Link
-                to="/select-work"
-                className="shrink-0 uppercase transition-colors text-[#9a9a9a] hover:text-[#be1e2d] leading-none"
+              <span
+                className="shrink-0 uppercase leading-none text-[#9a9a9a]"
                 style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
               >
                 Select Work
-              </Link>
+              </span>
             </div>
           </div>
 
@@ -101,7 +52,6 @@ const Home: React.FC = () => {
               to="/"
               className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
               style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              aria-label="Home"
             >
               Kunwar Manshahia
             </Link>
@@ -121,7 +71,6 @@ const Home: React.FC = () => {
             >
               About Me
             </button>
-
             <div
               className={`overflow-hidden transition-all duration-300 ease-out w-full ${
                 aboutOpen ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'
@@ -178,34 +127,45 @@ const Home: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center" style={{ margin: '60px' }}>
-        {isIdle ? (
-          <div
-            className="w-full max-w-4xl mx-auto flex items-center justify-center"
-            aria-label="Kunwar cartoon"
-          >
-            <KunwarCartoon />
-          </div>
-        ) : (
-          active && (
-            <Link
-              to={active.link}
-              className="group flex flex-col items-center max-w-full"
-              aria-label={`Open ${active.title}`}
-            >
-              <img
-                key={active.id}
-                src={active.image}
-                alt={active.title}
-                className="max-w-full h-auto object-contain"
-                style={{ maxHeight: 'calc(100vh - 200px)' }}
-              />
-            </Link>
-          )
-        )}
+      <main className="flex-1 flex items-center px-4 sm:px-8 py-10">
+        <ul className="w-full grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+          {selectWorkProjects.map((project) => (
+            <li key={project.id}>
+              <Link to={project.link} className="group block text-center">
+                <div className="aspect-[4/5] overflow-hidden bg-black/5">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-opacity group-hover:opacity-90"
+                  />
+                </div>
+                <p
+                  className="mt-3 uppercase text-black transition-colors group-hover:text-[#be1e2d]"
+                  style={{
+                    ...switzer,
+                    fontWeight: 500,
+                    fontSize: '16px',
+                  }}
+                >
+                  {project.title}
+                </p>
+                <p
+                  className="mt-1 text-black transition-colors group-hover:text-[#be1e2d]"
+                  style={{
+                    ...switzer,
+                    fontWeight: 500,
+                    fontSize: '14px',
+                  }}
+                >
+                  {project.year}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </main>
     </div>
   );
 };
 
-export default Home;
+export default SelectWorkPage;
