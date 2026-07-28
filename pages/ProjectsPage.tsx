@@ -1,169 +1,272 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { projects } from '../lib/projects';
+import {
+  listedProjects,
+  warplanesGallery,
+  lahaineGallery,
+  sfsGallery,
+  judgeByTheCoverGallery,
+  wrcGallery,
+  cirroGallery,
+  beyondTheCallGallery,
+  typographyGallery,
+} from '../lib/projects';
+import ProjectGridItem, { ImageLightbox } from '../components/ProjectGridItem';
+import SiteHeader from '../components/SiteHeader';
 
 const switzer: React.CSSProperties = {
   fontFamily: "'Switzer', sans-serif",
 };
 
+type LightboxState = { src: string; alt: string } | null;
+
+const SectionTitle: React.FC<{ title: string; year: string; to?: string }> = ({
+  title,
+  year,
+  to,
+}) => {
+  const body = (
+    <>
+      <p
+        className={`uppercase text-black ${to ? 'transition-colors group-hover:text-[#be1e2d]' : ''}`}
+        style={{ ...switzer, fontWeight: 500, fontSize: '16px' }}
+      >
+        {title}
+      </p>
+      <p
+        className={`mt-1 text-black ${to ? 'transition-colors group-hover:text-[#be1e2d]' : ''}`}
+        style={{ ...switzer, fontWeight: 500, fontSize: '14px' }}
+      >
+        {year}
+      </p>
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className="group mt-3 inline-block text-center">
+        {body}
+      </Link>
+    );
+  }
+
+  return <div className="mt-3 inline-block text-center">{body}</div>;
+};
+
 const ProjectsPage: React.FC = () => {
-  const [projectsOpen, setProjectsOpen] = useState(true);
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<LightboxState>(null);
+
+  const openLightbox = (src: string, alt: string) => setLightbox({ src, alt });
+
+  const triunity = listedProjects.find((p) => p.id === 'triunity');
+  const nike = listedProjects.find((p) => p.id === 'nike-pegasus');
 
   return (
     <div className="min-h-screen text-black" style={{ background: '#f4f4f2' }}>
-      <header className="relative w-full px-4 sm:px-8 pt-5 pb-4 z-10" style={{ background: '#f4f4f2' }}>
-        <div className="grid grid-cols-3 items-start gap-4">
-          <div
-            className="justify-self-start flex items-center gap-3 whitespace-nowrap min-h-[12px]"
-            onMouseEnter={() => setProjectsOpen(true)}
-            onMouseLeave={() => setProjectsOpen(false)}
-          >
-            <Link
-              to="/"
-              className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
-              style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-            >
-              Projects (...)
-            </Link>
-            <div
-              className={`flex items-center gap-3 overflow-hidden transition-all duration-300 ${
-                projectsOpen ? 'max-w-[16rem] opacity-100' : 'max-w-0 opacity-0'
-              }`}
-            >
-              <span
-                className="shrink-0 uppercase leading-none text-[#9a9a9a]"
-                style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              >
-                See All
-              </span>
-              <Link
-                to="/select-work"
-                className="shrink-0 uppercase transition-colors text-[#9a9a9a] hover:text-[#be1e2d] leading-none"
-                style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              >
-                Select Work
-              </Link>
-            </div>
-          </div>
-
-          <div className="justify-self-center min-h-[12px] flex items-center">
-            <Link
-              to="/"
-              className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
-              style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-            >
-              Kunwar Manshahia
-            </Link>
-          </div>
-
-          <div
-            className="justify-self-end flex flex-col items-end"
-            onMouseEnter={() => setAboutOpen(true)}
-            onMouseLeave={() => setAboutOpen(false)}
-          >
-            <button
-              type="button"
-              className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
-              style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              aria-expanded={aboutOpen}
-              onClick={() => setAboutOpen((v) => !v)}
-            >
-              About Me
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-out w-full ${
-                aboutOpen ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'
-              }`}
-            >
-              <div className="max-w-xs text-right sm:max-w-sm">
-                <p
-                  style={{
-                    ...switzer,
-                    fontWeight: 500,
-                    fontSize: '12px',
-                    lineHeight: 1.65,
-                    color: '#6b6b6b',
-                    textTransform: 'none',
-                  }}
-                >
-                  Kunwar Manshahia; a visual designer searching to create meaningful impacts across
-                  digital and print platforms. Drawing inspiration from stories, emotions, and his
-                  roots spanning Vancouver Island to Punjab. Based in Vancouver.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 justify-end">
-                  <Link
-                    to="/resume"
-                    className="underline underline-offset-2 transition-colors hover:text-[#be1e2d]"
-                    style={{
-                      ...switzer,
-                      fontWeight: 500,
-                      fontSize: '12px',
-                      color: '#9a9a9a',
-                      textTransform: 'none',
-                    }}
-                  >
-                    Resume
-                  </Link>
-                  <a
-                    href="https://linkedin.com/in/kunwarmanshahia"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-2 transition-colors hover:text-[#be1e2d]"
-                    style={{
-                      ...switzer,
-                      fontWeight: 500,
-                      fontSize: '12px',
-                      color: '#9a9a9a',
-                      textTransform: 'none',
-                    }}
-                  >
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <SiteHeader seeAllActive />
 
       <main className="px-4 sm:px-8 pt-10 pb-16 text-center">
-        <section aria-label="All projects" className="mx-auto max-w-3xl">
-          <ul className="flex flex-col gap-14">
-            {projects.map((project) => (
-              <li key={project.id}>
-                <Link to={project.link} className="group block text-center">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-auto block mx-auto transition-opacity group-hover:opacity-90"
-                  />
-                  <p
-                    className="mt-3 uppercase text-black transition-colors group-hover:text-[#be1e2d]"
-                    style={{
-                      ...switzer,
-                      fontWeight: 500,
-                      fontSize: '16px',
-                    }}
-                  >
-                    {project.title}
-                  </p>
-                  <p
-                    className="mt-1 text-black transition-colors group-hover:text-[#be1e2d]"
-                    style={{
-                      ...switzer,
-                      fontWeight: 500,
-                      fontSize: '14px',
-                    }}
-                  >
-                    {project.year}
-                  </p>
-                </Link>
-              </li>
+        <section id="warplanes" aria-label="Warplanes" className="mx-auto max-w-6xl mb-20 scroll-mt-20">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {warplanesGallery.map((item, index) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                link="/project/warplanes"
+                hideMeta
+                centerInRow={index === warplanesGallery.length - 1}
+              />
             ))}
           </ul>
+          <SectionTitle title="Warplanes" year="2026" to="/project/warplanes" />
+        </section>
+
+        <section
+          id="wrc"
+          aria-label="World Rally Championship (WRC)"
+          className="mx-auto max-w-6xl mb-20 scroll-mt-20"
+        >
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {wrcGallery.map((item) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                lockColumn
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="World Rally Championship (WRC)" year="2026" />
+        </section>
+
+        <section
+          id="judge-by-the-cover"
+          aria-label="Judge By The Cover"
+          className="mx-auto max-w-6xl mb-20 scroll-mt-20"
+        >
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {judgeByTheCoverGallery.map((item) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                lockColumn
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="Judge By The Cover" year="2026" />
+        </section>
+
+        <section
+          id="beyond-the-call"
+          aria-label="Beyond The Call"
+          className="mx-auto max-w-6xl mb-20 scroll-mt-20"
+        >
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {beyondTheCallGallery.map((item) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                lockColumn
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="Beyond The Call" year="2026" />
+        </section>
+
+        <section id="typography" aria-label="Typography" className="mx-auto max-w-6xl mb-20 scroll-mt-20">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {typographyGallery.map((item) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                lockColumn
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="Typography" year="2026" />
+        </section>
+
+        <section id="cirro" aria-label="Cirro Energy" className="mx-auto max-w-6xl mb-20 scroll-mt-20">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {cirroGallery.map((item) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                lockColumn
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="Cirro Energy" year="2026" />
+        </section>
+
+        {nike && (
+          <section
+            id="nike-pegasus"
+            aria-label="Nike Pegasus"
+            className="mx-auto max-w-6xl mb-20 scroll-mt-20"
+          >
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+              <ProjectGridItem
+                title={nike.title}
+                year={nike.year}
+                image={nike.image}
+                lockColumn
+                centerInRow
+                hideMeta
+                onOpen={() => openLightbox(nike.image, nike.title)}
+              />
+            </ul>
+            <SectionTitle title="Nike Pegasus" year="2026" />
+          </section>
+        )}
+
+        <section id="la-haine" aria-label="La Haine" className="mx-auto max-w-6xl mb-20 scroll-mt-20">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {lahaineGallery.map((item, index) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                centerInRow={index === lahaineGallery.length - 1}
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="La Haine" year="2025" />
+        </section>
+
+        {triunity && (
+          <section
+            id="triunity"
+            aria-label="Triunity Martial Arts"
+            className="mx-auto max-w-6xl mb-20 scroll-mt-20"
+          >
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+              <ProjectGridItem
+                title={triunity.title}
+                year={triunity.year}
+                image={triunity.image}
+                link={triunity.link}
+                hideMeta
+                centerInRow
+              />
+            </ul>
+            <SectionTitle title="Triunity Martial Arts" year="2025" to={triunity.link} />
+          </section>
+        )}
+
+        <section
+          id="signatures-for-sound"
+          aria-label="Signatures for Sound"
+          className="mx-auto max-w-6xl scroll-mt-20"
+        >
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-6 sm:gap-y-10">
+            {sfsGallery.map((item) => (
+              <ProjectGridItem
+                key={item.id}
+                title={item.title}
+                year={item.year}
+                image={item.image}
+                hideMeta
+                lockColumn
+                onOpen={() => openLightbox(item.image, item.title)}
+              />
+            ))}
+          </ul>
+          <SectionTitle title="Signatures for Sound" year="2025" />
         </section>
       </main>
+
+      {lightbox && (
+        <ImageLightbox
+          src={lightbox.src}
+          alt={lightbox.alt}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </div>
   );
 };

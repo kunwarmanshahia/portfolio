@@ -1,32 +1,68 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import KunwarCartoon from '../components/CartoonFace';
-import { projects } from '../lib/projects';
+import SiteHeader from '../components/SiteHeader';
+import { homeMouseImages } from '../lib/projects';
 
-const switzer: React.CSSProperties = {
-  fontFamily: "'Switzer', sans-serif",
+/** Mouse travel (px) before drawing the next image from the deck */
+const ZONE_PX = 50;
+
+const shuffle = <T,>(arr: T[]): T[] => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 };
 
-/** Horizontal mouse travel (px) before advancing to the next project */
-const ZONE_PX = 60;
+const isDesktopScrub = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches;
 
 const Home: React.FC = () => {
-  const [projectsOpen, setProjectsOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isIdle, setIsIdle] = useState(true);
   const idleTimerRef = useRef<number | null>(null);
+  const travelRef = useRef(0);
+  const deckRef = useRef<number[]>([]);
+
+  const refillDeck = (count: number, exclude?: number) => {
+    let next = shuffle([...Array(count).keys()]);
+    if (exclude !== undefined && next.length > 1 && next[0] === exclude) {
+      const swap = 1 + Math.floor(Math.random() * (next.length - 1));
+      [next[0], next[swap]] = [next[swap], next[0]];
+    }
+    deckRef.current = next;
+  };
+
+  const drawNext = (count: number, prev: number) => {
+    if (count <= 1) return 0;
+    if (deckRef.current.length === 0) refillDeck(count, prev);
+    let next = deckRef.current.shift()!;
+    if (next === prev && deckRef.current.length > 0) {
+      deckRef.current.push(next);
+      next = deckRef.current.shift()!;
+    } else if (next === prev) {
+      refillDeck(count, prev);
+      next = deckRef.current.shift()!;
+    }
+    return next;
+  };
 
   useEffect(() => {
-    projects.forEach((p) => {
+    homeMouseImages.forEach((p) => {
       const img = new Image();
       img.src = p.image;
     });
   }, []);
 
   useEffect(() => {
-    const count = projects.length;
+    const count = homeMouseImages.length;
     if (count === 0) return;
+
+    refillDeck(count);
+    setActiveIndex(deckRef.current.shift() ?? 0);
 
     const bumpIdleTimer = () => {
       setIsIdle(false);
@@ -38,147 +74,35 @@ const Home: React.FC = () => {
       }, 2000);
     };
 
-    const onMove = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDesktopScrub()) return;
+      travelRef.current += Math.abs(e.movementX) + Math.abs(e.movementY);
       bumpIdleTimer();
-      const slotWidth = Math.max(ZONE_PX, window.innerWidth / count);
-      const next = Math.min(count - 1, Math.max(0, Math.floor(e.clientX / slotWidth)));
-      setActiveIndex((prev) => (prev === next ? prev : next));
+      if (travelRef.current < ZONE_PX) return;
+      travelRef.current = 0;
+      setActiveIndex((prev) => drawNext(count, prev));
     };
 
-    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mousemove', onMouseMove);
+
     return () => {
-      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mousemove', onMouseMove);
       if (idleTimerRef.current !== null) {
         window.clearTimeout(idleTimerRef.current);
       }
     };
   }, []);
 
-  const active = projects[Math.min(activeIndex, Math.max(0, projects.length - 1))];
+  const active = homeMouseImages[Math.min(activeIndex, Math.max(0, homeMouseImages.length - 1))];
 
   return (
     <div className="min-h-screen text-black flex flex-col" style={{ background: '#f4f4f2' }}>
-      <header className="relative w-full px-4 sm:px-8 pt-5 pb-4 z-10" style={{ background: '#f4f4f2' }}>
-        <div className="grid grid-cols-3 items-start gap-4">
-          <div
-            className="justify-self-start flex items-center gap-3 whitespace-nowrap min-h-[12px]"
-            onMouseEnter={() => setProjectsOpen(true)}
-            onMouseLeave={() => setProjectsOpen(false)}
-          >
-            <button
-              type="button"
-              className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
-              style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              aria-expanded={projectsOpen}
-              onClick={() => setProjectsOpen((v) => !v)}
-            >
-              Projects (...)
-            </button>
-            <div
-              className={`flex items-center gap-3 overflow-hidden transition-all duration-300 ${
-                projectsOpen ? 'max-w-[16rem] opacity-100' : 'max-w-0 opacity-0'
-              }`}
-            >
-              <Link
-                to="/projects"
-                className="shrink-0 uppercase transition-colors text-[#9a9a9a] hover:text-[#be1e2d] leading-none"
-                style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              >
-                See All
-              </Link>
-              <Link
-                to="/select-work"
-                className="shrink-0 uppercase transition-colors text-[#9a9a9a] hover:text-[#be1e2d] leading-none"
-                style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              >
-                Select Work
-              </Link>
-            </div>
-          </div>
+      <SiteHeader />
 
-          <div className="justify-self-center min-h-[12px] flex items-center">
-            <Link
-              to="/"
-              className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
-              style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              aria-label="Home"
-            >
-              Kunwar Manshahia
-            </Link>
-          </div>
-
-          <div
-            className="justify-self-end flex flex-col items-end"
-            onMouseEnter={() => setAboutOpen(true)}
-            onMouseLeave={() => setAboutOpen(false)}
-          >
-            <button
-              type="button"
-              className="uppercase text-black transition-colors hover:text-[#be1e2d] leading-none"
-              style={{ ...switzer, fontWeight: 500, fontSize: '12px' }}
-              aria-expanded={aboutOpen}
-              onClick={() => setAboutOpen((v) => !v)}
-            >
-              About Me
-            </button>
-
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-out w-full ${
-                aboutOpen ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'
-              }`}
-            >
-              <div className="max-w-xs text-right sm:max-w-sm">
-                <p
-                  style={{
-                    ...switzer,
-                    fontWeight: 500,
-                    fontSize: '12px',
-                    lineHeight: 1.65,
-                    color: '#6b6b6b',
-                    textTransform: 'none',
-                  }}
-                >
-                  Kunwar Manshahia; a visual designer searching to create meaningful impacts across
-                  digital and print platforms. Drawing inspiration from stories, emotions, and his
-                  roots spanning Vancouver Island to Punjab. Based in Vancouver.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 justify-end">
-                  <Link
-                    to="/resume"
-                    className="underline underline-offset-2 transition-colors hover:text-[#be1e2d]"
-                    style={{
-                      ...switzer,
-                      fontWeight: 500,
-                      fontSize: '12px',
-                      color: '#9a9a9a',
-                      textTransform: 'none',
-                    }}
-                  >
-                    Resume
-                  </Link>
-                  <a
-                    href="https://linkedin.com/in/kunwarmanshahia"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-2 transition-colors hover:text-[#be1e2d]"
-                    style={{
-                      ...switzer,
-                      fontWeight: 500,
-                      fontSize: '12px',
-                      color: '#9a9a9a',
-                      textTransform: 'none',
-                    }}
-                  >
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1 flex flex-col items-center justify-center" style={{ margin: '60px' }}>
+      <main
+        className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8"
+        style={{ margin: 'clamp(24px, 6vw, 60px)' }}
+      >
         {isIdle ? (
           <div
             className="w-full max-w-4xl mx-auto flex items-center justify-center"
@@ -199,6 +123,7 @@ const Home: React.FC = () => {
                 alt={active.title}
                 className="max-w-full h-auto object-contain"
                 style={{ maxHeight: 'calc(100vh - 200px)' }}
+                draggable={false}
               />
             </Link>
           )
