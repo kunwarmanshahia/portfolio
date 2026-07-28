@@ -1,161 +1,134 @@
-import React from 'react';
-import CaseStudyCard from '../components/CaseStudyCard';
-import ProjectCard from '../components/ProjectCard';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import KunwarCartoon from '../components/CartoonFace';
+import SiteHeader from '../components/SiteHeader';
+import { homeMouseImages } from '../lib/projects';
+
+/** Mouse travel (px) before drawing the next image from the deck */
+const ZONE_PX = 50;
+
+const shuffle = <T,>(arr: T[]): T[] => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+const isDesktopScrub = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches;
+
 const Home: React.FC = () => {
-  const selectWorkProjects = [
-    {
-      id: 'sw1',
-      title: 'La Haine',
-      description: 'Print Design · 2025',
-      image: '/images/lahaine-1.jpg',
-      link: '/project/la-haine',
-    },
-    {
-      id: 'sw2',
-      title: 'Clover X Barbershop',
-      description: 'Client Branding · 2025',
-      image: '/images/cxb-cover.jpg',
-      link: '/project/clover-x-barbershop',
-    },
-  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isIdle, setIsIdle] = useState(true);
+  const idleTimerRef = useRef<number | null>(null);
+  const travelRef = useRef(0);
+  const deckRef = useRef<number[]>([]);
 
-  const caseStudies = [
-    {
-      id: '2',
-      title: "New to design? Here's how you can build a portfolio piece within a week.",
-      appName: 'Mosaic',
-      category: 'UX/UI',
-      image: '/images/covers/mosaic-cover.jpg?v=2',
-    },
-  ];
+  const refillDeck = (count: number, exclude?: number) => {
+    let next = shuffle([...Array(count).keys()]);
+    if (exclude !== undefined && next.length > 1 && next[0] === exclude) {
+      const swap = 1 + Math.floor(Math.random() * (next.length - 1));
+      [next[0], next[swap]] = [next[swap], next[0]];
+    }
+    deckRef.current = next;
+  };
 
-  const summaryProjects = [
-    { id: 'p1', title: 'GEARBOX Magazine', description: 'Layout Design · 2025', image: '/images/gearbox-cover.jpg', link: '/project/gearbox', objectFit: 'cover' },
-    { id: 'p2', title: 'Triunity Martial Arts', description: 'Client Branding · 2025', image: '/images/triunity-1.jpg', link: '/project/triunity', objectFit: 'cover' },
-    { id: 'p3', title: 'The Broken Yolk', description: 'Layout Design · 2025', image: '/images/brokenyolk-cover.jpg', link: '/project/broken-yolk', objectFit: 'cover' },
-    { id: 'p4', title: 'Signatures for Sound', description: 'Client Branding · 2025', image: '/images/sfs-cover.jpg?v=2', link: '/project/signatures-for-sound' },
-    { id: 'p5', title: 'Forge Trades Simulator', description: 'UX/UI · 2025', image: '/images/covers/forge-cover.jpg', link: '/case-study/forge', objectFit: 'contain' },
-    { id: 'p6', title: 'Clover X Barbershop', description: 'Client Branding · 2025', image: '/images/cxb-cover.jpg', link: '/project/clover-x-barbershop' },
-    { id: 'p7', title: 'La Haine', description: 'Print Design · 2025', image: '/images/lahaine-1.jpg', link: '/project/la-haine' },
-  ];
+  const drawNext = (count: number, prev: number) => {
+    if (count <= 1) return 0;
+    if (deckRef.current.length === 0) refillDeck(count, prev);
+    let next = deckRef.current.shift()!;
+    if (next === prev && deckRef.current.length > 0) {
+      deckRef.current.push(next);
+      next = deckRef.current.shift()!;
+    } else if (next === prev) {
+      refillDeck(count, prev);
+      next = deckRef.current.shift()!;
+    }
+    return next;
+  };
+
+  useEffect(() => {
+    homeMouseImages.forEach((p) => {
+      const img = new Image();
+      img.src = p.image;
+    });
+  }, []);
+
+  useEffect(() => {
+    const count = homeMouseImages.length;
+    if (count === 0) return;
+
+    refillDeck(count);
+    setActiveIndex(deckRef.current.shift() ?? 0);
+
+    const bumpIdleTimer = () => {
+      setIsIdle(false);
+      if (idleTimerRef.current !== null) {
+        window.clearTimeout(idleTimerRef.current);
+      }
+      idleTimerRef.current = window.setTimeout(() => {
+        setIsIdle(true);
+      }, 2000);
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDesktopScrub()) return;
+      travelRef.current += Math.abs(e.movementX) + Math.abs(e.movementY);
+      bumpIdleTimer();
+      if (travelRef.current < ZONE_PX) return;
+      travelRef.current = 0;
+      setActiveIndex((prev) => drawNext(count, prev));
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      if (idleTimerRef.current !== null) {
+        window.clearTimeout(idleTimerRef.current);
+      }
+    };
+  }, []);
+
+  const active = homeMouseImages[Math.min(activeIndex, Math.max(0, homeMouseImages.length - 1))];
 
   return (
-    <div className="px-4 md:px-8 lg:px-12 pt-4 md:pt-6 pb-8 md:pb-16 max-w-[1920px] mx-auto w-full space-y-10 md:space-y-14 [&>*:nth-child(2)]:!mt-10 md:[&>*:nth-child(2)]:!mt-14 [&>*:nth-child(3)]:!mt-10 md:[&>*:nth-child(3)]:!mt-14">
-      {/* Selected Work heading */}
-      <section className="space-y-4">
-        <div className="pt-4">
-          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            Selected Work.
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 w-full">
-          {selectWorkProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </section>
+    <div className="min-h-screen text-black flex flex-col" style={{ background: '#f4f4f2' }}>
+      <SiteHeader />
 
-      {/* Case Study Section */}
-      <section id="case-studies" className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
-          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            Case Study.
-          </h2>
-        </div>
-        <div
-          className={`grid grid-cols-1 ${
-            caseStudies.length > 1 ? 'md:grid-cols-2' : 'md:grid-cols-1'
-          } gap-4 md:gap-6 pt-4 w-full`}
-        >
-          {caseStudies.map((study) => (
-            <CaseStudyCard key={study.id} study={study} />
-          ))}
-        </div>
-      </section>
-
-      {/* Projects Section — same spacing as Case Studies (header + border) */}
-      <section id="projects" className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
-          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            Projects.
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4">
-          {summaryProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </section>
-
-      {/* About me. */}
-      <section id="about" className="space-y-4">
-        <div className="border-t-2 border-brand-dark dark:border-brand-light pt-6 md:pt-8">
-          <h2 className="font-sans font-bold text-4xl md:text-7xl lg:text-8xl leading-[1.3] tracking-tighter text-brand-dark dark:text-brand-light uppercase">
-            My name is<br />Kunwar Manshahia.
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 pt-4">
-          <div className="space-y-6">
-            <div className="space-y-4 text-lg md:text-xl font-sans font-light text-brand-dark dark:text-brand-light opacity-90 max-w-xl leading-relaxed">
-              <p>Before anything else, I’m a communicator. I use design as a language to connect people, ideas, and culture.</p>
-              <p>
-                I work across product and visual design, building experiences within business and technology.
-              </p>
-              <p>
-                Before design, I was heavily involved in music from a young age — digging through rows of vinyl, producing sounds, and immersing myself in emerging acoustic, visual, and cultural trends.
-              </p>
-              <p>
-                That period shaped my creative foundation and taught me how creation can translate into emotion — it's something that continues to influence how I approach design today.
-              </p>
-            </div>
-            <p className="font-mono text-xs md:text-sm text-brand-dark/70 dark:text-brand-light/70">
-              currently a digital design and development student at bcit, graduating may 2026.
-            </p>
+      <main
+        className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8"
+        style={{ margin: 'clamp(24px, 6vw, 60px)' }}
+      >
+        {isIdle ? (
+          <div
+            className="w-full max-w-4xl mx-auto flex items-center justify-center"
+            aria-label="Kunwar cartoon"
+          >
+            <KunwarCartoon />
           </div>
-          <div className="font-sans space-y-8 pt-8 lg:pt-0">
-            <div className="space-y-2">
-              <h3 className="uppercase text-[10px] md:text-xs font-bold text-brand-dark/60 dark:text-brand-light/60 tracking-[0.2em]">Capabilities</h3>
-              <ul className="text-base md:text-lg space-y-2 font-medium text-brand-dark dark:text-brand-light">
-                <li>User Flows, User Research, Wireframing, Prototyping <span className="font-mono font-normal text-xs md:text-sm text-brand-dark/50 dark:text-brand-light/50 uppercase">FIGMA</span></li>
-                <li>Branding Systems, Composition, Layout, Typography <span className="font-mono font-normal text-xs md:text-sm text-brand-dark/50 dark:text-brand-light/50 uppercase">PHOTOSHOP, ILLUSTRATOR</span></li>
-                <li>Storyboarding, Timing, Transitions, Filming <span className="font-mono font-normal text-xs md:text-sm text-brand-dark/50 dark:text-brand-light/50 uppercase">AFTER EFFECTS, PREMIERE PRO</span></li>
-              </ul>
-            </div>
-            <div className="space-y-2">
-              <h3 className="uppercase text-[10px] md:text-xs font-bold text-brand-dark/60 dark:text-brand-light/60 tracking-[0.2em]">Connect</h3>
-              <ul className="text-base md:text-lg space-y-1 font-medium">
-                <li>
-                  <a
-                    href="mailto:bykunwar@gmail.com"
-                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors md:hover:text-orange-500 md:dark:hover:text-orange-400"
-                  >
-                    Email
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://linkedin.com/in/kunwarmanshahia"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors md:hover:text-orange-500 md:dark:hover:text-orange-400"
-                  >
-                    LinkedIn
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/#/resume"
-                    className="text-brand-dark dark:text-brand-light underline underline-offset-4 transition-colors md:hover:text-orange-500 md:dark:hover:text-orange-400"
-                  >
-                    Resume
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
+        ) : (
+          active && (
+            <Link
+              to={active.link}
+              className="group flex flex-col items-center max-w-full"
+              aria-label={`Open ${active.title}`}
+            >
+              <img
+                key={active.id}
+                src={active.image}
+                alt={active.title}
+                className="max-w-full h-auto object-contain"
+                style={{ maxHeight: 'calc(100vh - 200px)' }}
+                draggable={false}
+              />
+            </Link>
+          )
+        )}
+      </main>
     </div>
   );
 };

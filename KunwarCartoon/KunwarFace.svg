@@ -7,15 +7,15 @@
       }
 
       .cls-1, .cls-6 {
-        fill: #f8f3ec;
+        fill: #f4f4f2;
       }
 
       .cls-1, .cls-3, .cls-4 {
-        stroke: #282828;
+        stroke: #000000;
       }
 
       .cls-2 {
-        stroke: #f8f3ec;
+        stroke: #f4f4f2;
       }
 
       .cls-2, .cls-3, .cls-4, .cls-5 {
@@ -31,15 +31,15 @@
       }
 
       .cls-5 {
-        stroke: #5c5a58;
+        stroke: #000000;
       }
 
       path:not([class]),
       polygon:not([class]),
       polyline:not([class]),
       line:not([class]) {
-        fill: #282828;
-        stroke: #282828;
+        fill: #000000;
+        stroke: #000000;
       }
     </style>
   </defs>
